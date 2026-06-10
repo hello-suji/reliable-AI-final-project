@@ -1,0 +1,24 @@
+{
+  "instance_id": "pydata__xarray-6992",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/pydata__xarray-6992/predictions.json",
+  "run_id": "debug-pydata__xarray-6992",
+  "harness_command": [
+    "python",
+    "-m",
+    "tddbench.harness.run_evaluation",
+    "--dataset_name",
+    "TDD_Bench.json",
+    "--predictions_path",
+    "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/pydata__xarray-6992/predictions.json",
+    "--max_workers",
+    "1",
+    "--instance_ids",
+    "pydata__xarray-6992",
+    "--run_id",
+    "debug-pydata__xarray-6992"
+  ],
+  "harness_returncode": 0,
+  "harness_stdout": "Using gold patch predictions\nRunning 1 unevaluated instances...\nBase image sweb.base.x86_64:latest already exists, skipping build.\nBase images built successfully.\nNo environment images need to be built.\nFound 1 existing instance images. Will reuse them.\nRunning 1 instances...\n{'xarray/tests/test_dataset.py': ['test_len_after_set_and_reset_index_repro']}\n['xarray/tests/test_dataset.py::test_len_after_set_and_reset_index_repro']\nPointer 1\n[4029, 4030, 4031, 4046, 4049, 4051, 4055, 4071, 4087, 4102, 4142, 4143, 4144, 4146, 4150, 4152, 4155, 4156, 4157, 4158, 4159, 4160, 4161, 4162, 4163, 4164, 4165, 4166, 4167, 4169, 4170, 4180, 4182]\n[721]\n-------------------------------Before Patch-------------------------------\n{'xarray/tests/test_dataset.py::test_len_after_set_and_reset_index_repro': 'FAILED'}\n---------------------------------------------------------------------------------\n\n\n\nPointer 2\n[4029, 4030, 4031, 4033, 4045, 4048, 4049, 4052, 4053, 4055, 4059, 4060, 4074, 4075, 4079, 4095, 4096, 4097, 4098, 4099, 4100, 4101, 4104, 4119, 4159, 4160, 4161, 4163, 4165, 4166, 4167, 4168, 4169, 4170, 4171, 4172, 4177, 4178, 4179, 4181, 4182, 4184, 4186, 4187, 4188, 4189, 4190, 4191, 4193, 4196, 4197, 4198, 4199, 4200, 4203, 4204, 4205, 4206, 4207, 4209, 4210, 4211, 4212, 4222, 4224, 4225, 4226]\n[722, 723, 724]\n-------------------------------After Patch-------------------------------\n{'xarray/tests/test_dataset.py::test_len_after_set_and_reset_index_repro': 'PASSED'}\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Coverage-----------------------------------------\n0.7115384615384616\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Final Report--------------------------------------\n{'pydata__xarray-6992': {'contributing_functions': ['xarray/tests/test_dataset.py::test_len_after_set_and_reset_index_repro'], 'test_before_patch': {'xarray/tests/test_dataset.py::test_len_after_set_and_reset_index_repro': 'FAILED'}, 'test_after_patch': {'xarray/tests/test_dataset.py::test_len_after_set_and_reset_index_repro': 'PASSED'}, 'total_changed': 104, 'total_missed': 30, 'cov_score': 0.7115384615384616, 'final_score': 0.7115384615384616, 'resolved': True}}\n---------------------------------------------------------------------------------\n\n\n\nAll instances run.\nCleaning cached images...\nRemoved 0 images.\nTotal instances: 1\nInstances submitted: 1\nInstances completed: 1\nInstances incomplete: 0\nInstances resolved: 1\nInstances unresolved: 0\nInstances with empty patches: 0\nInstances with errors: 0\nUnstopped containers: 0\nUnremoved images: 1\nFinal score: 0.7115384615384616\nReport written to __home__selab__kcc-2026__outputs__smallbatch__20260610_101413__pydata__xarray-6992__predictions.json.debug-pydata__xarray-6992.json\n",
+  "harness_stderr": "<frozen runpy>:128: RuntimeWarning: 'tddbench.harness.run_evaluation' found in sys.modules after import of package 'tddbench.harness', but prior to execution of 'tddbench.harness.run_evaluation'; this may result in unpredictable behaviour\n\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|██████████| 1/1 [00:46<00:00, 46.37s/it]\n100%|██████████| 1/1 [00:46<00:00, 46.37s/it]\n"
+}

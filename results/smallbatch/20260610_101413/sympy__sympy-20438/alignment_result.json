@@ -1,0 +1,171 @@
+{
+  "iteration": 1,
+  "failure_type": "ALIGNED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.9711,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.8846
+    },
+    "issue_alignment_score": 0.9808,
+    "coverage_score": 1.0,
+    "oracle_confidence_score": 0.85,
+    "oracle_risk_flags": [
+      "private_attribute_oracle"
+    ],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [
+      "soft_oracle_risk_flags=private_attribute_oracle"
+    ],
+    "target_verified": true,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Oracle risk: private_attribute_oracle Gate warnings: soft_oracle_risk_flags=private_attribute_oracle",
+  "feedback": {
+    "failure_type": "ALIGNED",
+    "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Oracle risk: private_attribute_oracle Gate warnings: soft_oracle_risk_flags=private_attribute_oracle",
+    "oracle_additions": [
+      "private attribute를 oracle로 읽으면 내부 구현에 묶여 post-fix에서도 실패하기 쉽다. public API의 return value/state로 검증하라."
+    ],
+    "stimulus_additions": [],
+    "precondition_additions": [],
+    "expected_failure_override": "테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/core/basic.py",
+      "target_function": "simplify",
+      "related_classes": [
+        "Complement",
+        "Eq",
+        "Equality"
+      ],
+      "candidate_test_file": "sympy/core/tests/test_basic.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where simplify can be called."
+    ],
+    "execution_stimulus": [
+      "Call simplify with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "`is_subset` gives wrong results [iteration-1 feedback] 테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "relevant_source_files": [
+      "sympy/core/basic.py",
+      "sympy/core/relational.py",
+      "sympy/simplify/simplify.py"
+    ],
+    "relevant_test_files": [
+      "sympy/core/tests/test_basic.py",
+      "sympy/core/tests/test_relational.py",
+      "sympy/simplify/tests/test_rewrite.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": ">>> a = FiniteSet(1, 2)\r\n>>> b = ProductSet(a, a)\r\n>>> c = FiniteSet((1, 1), (1, 2), (2, 1), (2, 2))\r\n>>> b.intersection(c) == c.intersection(b)\r\nTrue\r\n>>> b.is_subset(c)\r\n>>> c.is_subset(b)\r\nTrue\r\n>>> Eq(b, c).simplify()\r\nTraceback (most recent call last):\r\n  File \"/usr/lib/python3.6/code.py\", line 91, in runcode\r\n    exec(code, self.locals)\r\n  File \"<console>\", line 1, in <module>\r\n  File \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/basic.py\", line 1655, in simplify\r\n    return simplify(self, **kwargs)\r\n  File \"/home/czgdp1807ssd/sympy_project/sympy/sympy/simplify/simplify.py\", line 559, in simplify\r\n    return _eval_simplify(**kwargs)\r\n  File \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 646, in _eval_simplify\r\n    e = super(Equality, self)._eval_simplify(**kwargs)\r\n  File \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 308, in _eval_simplify\r\n    elif dif.equals(0):  # XXX this is expensive\r\nAttributeError: 'Complement' object has no attribute 'equals'\r\n>>> b.rewrite(FiniteSet)\r\n      2\r\n{1, 2} \r\n>>>"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "True\nTrue\nTraceback (most recent call last):\nFile \"/usr/lib/python3.6/code.py\", line 91, in runcode\nexec(code, self.locals)\nFile \"<console>\", line 1, in <module>\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/basic.py\", line 1655, in simplify\nreturn simplify(self, **kwargs)\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/simplify/simplify.py\", line 559, in simplify\nreturn _eval_simplify(**kwargs)\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 646, in _eval_simplify\ne = super(Equality, self)._eval_simplify(**kwargs)\nFile \"/home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py\", line 308, in _eval_simplify\nelif dif.equals(0):  # XXX this is expensive\nAttributeError: 'Complement' object has no attribute 'equals'\n2\n{1, 2}\n>>>"
+    ],
+    "error_keywords": [
+      "AttributeError",
+      "AttributeError: 'Complement' object has no attribute 'equals'"
+    ],
+    "identifiers": {
+      "functions": [
+        "_eval_simplify",
+        "equals",
+        "exec",
+        "intersection",
+        "is_subset",
+        "rewrite",
+        "simplify"
+      ],
+      "classes": [
+        "Complement",
+        "Eq",
+        "Equality",
+        "FiniteSet",
+        "ProductSet"
+      ],
+      "files": [
+        "6/code.py",
+        "home/czgdp1807ssd/sympy_project/sympy/sympy/core/basic.py",
+        "home/czgdp1807ssd/sympy_project/sympy/sympy/core/relational.py",
+        "home/czgdp1807ssd/sympy_project/sympy/sympy/simplify/simplify.py"
+      ],
+      "exceptions": [
+        "AttributeError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert a public invariant that excludes the buggy output.",
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. [iteration-1 feedback] private attribute를 oracle로 읽으면 내부 구현에 묶여 post-fix에서도 실패하기 쉽다. public API의 return value/state로 검증하라.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output"
+  },
+  "should_continue": false,
+  "test_results": {
+    "test_simplify_complement_issue_repro": "FAILED"
+  },
+  "coverage_summary": {
+    "sympy/algebras/__init__.py": {
+      "cover": 100.0,
+      "stmts": 2,
+      "miss": 0
+    },
+    "sympy/assumptions/__init__.py": {
+      "cover": 100.0,
+      "stmts": 4,
+      "miss": 0
+    },
+    "sympy/calculus/__init__.py": {
+      "cover": 100.0,
+      "stmts": 5,
+      "miss": 0
+    },
+    "sympy/concrete/__init__.py": {
+      "cover": 100.0,
+      "stmts": 3,
+      "miss": 0
+    },
+    "sympy/core/__init__.py": {
+      "cover": 100.0,
+      "stmts": 24,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

@@ -1,0 +1,206 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateformat.py",
+      "target_function": "Y",
+      "related_classes": [
+        "DateFormat"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_dateformat.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.utils.dateformat import DateFormat",
+      "from datetime import date"
+    ],
+    "execution_stimulus": [
+      "df = DateFormat(date(999, 1, 1))",
+      "result = df.format('Y')"
+    ],
+    "expected_failure": "The result should be '0999' but it returns '999'.",
+    "relevant_source_files": [
+      "django/utils/dateformat.py",
+      "django/utils/timesince.py",
+      "django/utils/timezone.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_dateformat.py",
+      "tests/admin_scripts/test_django_admin_py.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_Y_specifier_for_year_less_than_1000():\n    from django.utils.dateformat import DateFormat\n    from datetime import date\n    df = DateFormat(date(999, 1, 1))\n    result = df.format('Y')\n    assert result == '0999'"
+      }
+    ],
+    "expected_outputs": [
+      "0999"
+    ],
+    "actual_outputs": [
+      "999"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "Y"
+      ],
+      "classes": [
+        "DateFormat"
+      ]
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected"
+  },
+  {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "django/utils/dateformat.py",
+      "target_function": "Y",
+      "related_classes": [
+        "DateFormat"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_dateformat.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.utils.dateformat import DateFormat",
+      "from datetime import date"
+    ],
+    "execution_stimulus": [
+      "df = DateFormat(date(888, 5, 15))",
+      "result = df.format('Y')"
+    ],
+    "expected_failure": "The result should be '0888' but it returns '888'.",
+    "relevant_source_files": [
+      "django/utils/dateformat.py",
+      "django/utils/timesince.py",
+      "django/utils/timezone.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_dateformat.py",
+      "tests/admin_scripts/test_django_admin_py.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_Y_specifier_for_year_888():\n    from django.utils.dateformat import DateFormat\n    from datetime import date\n    df = DateFormat(date(888, 5, 15))\n    result = df.format('Y')\n    assert result == '0888'"
+      }
+    ],
+    "expected_outputs": [
+      "0888"
+    ],
+    "actual_outputs": [
+      "888"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "Y"
+      ],
+      "classes": [
+        "DateFormat"
+      ]
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected"
+  },
+  {
+    "scenario_id": "S3",
+    "target_location": {
+      "source_file": "django/utils/dateformat.py",
+      "target_function": "Y",
+      "related_classes": [
+        "DateFormat"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_dateformat.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.utils.dateformat import DateFormat",
+      "from datetime import date"
+    ],
+    "execution_stimulus": [
+      "df = DateFormat(date(1, 1, 1))",
+      "result = df.format('Y')"
+    ],
+    "expected_failure": "The result should be '0001' but it returns '1'.",
+    "relevant_source_files": [
+      "django/utils/dateformat.py",
+      "django/utils/timesince.py",
+      "django/utils/timezone.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_dateformat.py",
+      "tests/admin_scripts/test_django_admin_py.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_Y_specifier_for_year_1():\n    from django.utils.dateformat import DateFormat\n    from datetime import date\n    df = DateFormat(date(1, 1, 1))\n    result = df.format('Y')\n    assert result == '0001'"
+      }
+    ],
+    "expected_outputs": [
+      "0001"
+    ],
+    "actual_outputs": [
+      "1"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "Y"
+      ],
+      "classes": [
+        "DateFormat"
+      ]
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected"
+  }
+]

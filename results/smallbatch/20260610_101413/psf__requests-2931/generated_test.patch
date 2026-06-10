@@ -1,0 +1,19 @@
+--- a/test_requests.py
++++ b/test_requests.py
+@@ -1739,3 +1739,16 @@
+ 
+ if __name__ == '__main__':
+     unittest.main()
++
++import json
++def test_put_with_binary_payload_repro():
++    from requests.models import PreparedRequest
++    from unittest.mock import patch
++    req = PreparedRequest()
++    req.prepare(method='PUT', url='http://httpbin.org/put', data=u"ööö".encode("utf-8"))
++    with patch('requests.sessions.Session.send') as mock_send:
++        mock_send.return_value.status_code = 200
++        mock_send.return_value.json.return_value = {'data': u'ööö'}
++        response = requests.put(req.url, data=req.body)
++        assert response.status_code == 200
++        assert response.json()['data'] == u'ööö'

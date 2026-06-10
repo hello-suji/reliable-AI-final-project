@@ -1,0 +1,566 @@
+{
+  "instance_id": "django__django-14373",
+  "repo": "django/django",
+  "base_commit": "b1a4b1f0bdf05adbd3dc4dde14228e68da54c1a3",
+  "repo_path": "data/repos/django__django",
+  "candidate_source_files": [
+    {
+      "path": "django/utils/dateformat.py",
+      "score": 22,
+      "matched_identifiers": [
+        "DateFormat",
+        "Y",
+        "always",
+        "dateformat",
+        "digit",
+        "specifier"
+      ],
+      "reasons": [
+        "class_match:DateFormat",
+        "path_contains_class:DateFormat",
+        "stem_in_issue_text:dateformat",
+        "source_content_tokens:always,dateformat,digit,specifier,utils",
+        "inferred_fault_location:Y"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {
+        "DateFormat": "class DateFormat(TimeFormat):\n    def b(self):\n        \"Month, textual, 3 letters, lowercase; e.g. 'jan'\"\n        return MONTHS_3[self.data.month]\n\n    def c(self):\n        \"\"\"\n        ISO 8601 Format\n        Example : '2008-01-02T10:30:00.000123'\n        \"\"\"\n        return self.data.isoformat()\n\n    def d(self):\n        \"Day of the month, 2 digits with leading zeros; i.e. '01' to '31'\"\n        return '%02d' % self.data.day",
+        "Y": "    def Y(self):\n        \"Year, 4 digits; e.g. '1999'\"\n        return self.data.year\n\n    def z(self):\n        \"\"\"Day of the year, i.e. 1 to 366.\"\"\"\n        return self.data.timetuple().tm_yday\n\n\ndef format(value, format_string):\n    \"Convenience function\"\n    df = DateFormat(value)\n    return df.format(format_string)\n\n"
+      },
+      "top_level_functions": [
+        "Formatter.format",
+        "TimeFormat.a",
+        "TimeFormat.A",
+        "TimeFormat.e",
+        "TimeFormat.f",
+        "TimeFormat.g",
+        "TimeFormat.G",
+        "TimeFormat.h",
+        "TimeFormat.H",
+        "TimeFormat.i",
+        "TimeFormat.O",
+        "TimeFormat.P",
+        "TimeFormat.s",
+        "TimeFormat.T",
+        "TimeFormat.u",
+        "TimeFormat.Z",
+        "DateFormat.b",
+        "DateFormat.c",
+        "DateFormat.d",
+        "DateFormat.D",
+        "DateFormat.E",
+        "DateFormat.F",
+        "DateFormat.I",
+        "DateFormat.j",
+        "DateFormat.l",
+        "DateFormat.L",
+        "DateFormat.m",
+        "DateFormat.M",
+        "DateFormat.n",
+        "DateFormat.N",
+        "DateFormat.o",
+        "DateFormat.r",
+        "DateFormat.S",
+        "DateFormat.t",
+        "DateFormat.U",
+        "DateFormat.w",
+        "DateFormat.W",
+        "DateFormat.y",
+        "DateFormat.Y",
+        "DateFormat.z"
+      ],
+      "localization_signals": [
+        "graph_neighbor",
+        "inferred_fault",
+        "issue_identifier",
+        "issue_text_content"
+      ],
+      "graph_neighbors": [
+        "django/forms/fields.py",
+        "django/template/defaultfilters.py",
+        "django/utils/dateformat.py"
+      ]
+    },
+    {
+      "path": "django/utils/timesince.py",
+      "score": 14,
+      "matched_identifiers": [
+        "timesince",
+        "timeuntil"
+      ],
+      "reasons": [
+        "graph_neighbor_imported_by_top",
+        "graph_neighbor_import_package",
+        "graph_neighbor_called_symbol:timesince,timeuntil"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {
+        "timesince": "def timesince(d, now=None, reversed=False, time_strings=None, depth=2):\n    \"\"\"\n    Take two datetime objects and return the time between d and now as a nicely\n    formatted string, e.g. \"10 minutes\". If d occurs after now, return\n    \"0 minutes\".\n\n    Units used are years, months, weeks, days, hours, and minutes.\n    Seconds and microseconds are ignored. Up to `depth` adjacent units will be\n    displayed.  For example, \"2 weeks, 3 days\" and \"1 year, 3 months\" are\n    possible outputs, but \"2 weeks, 3 hours\" and \"1 year, 5 days\" are not.\n\n    `time_strings` is an optional dict of strings to replace the default\n    TIME_STRINGS dict.\n\n    `depth` is an optional integer to control the number of adjacent time",
+        "timeuntil": "def timeuntil(d, now=None, time_strings=None, depth=2):\n    \"\"\"\n    Like timesince, but return a string measuring the time until the given time.\n    \"\"\"\n    return timesince(d, now, reversed=True, time_strings=time_strings, depth=depth)"
+      },
+      "top_level_functions": [
+        "timesince",
+        "timeuntil"
+      ],
+      "localization_signals": [
+        "graph_neighbor"
+      ],
+      "graph_neighbors": [
+        "django/forms/fields.py",
+        "django/template/defaultfilters.py",
+        "django/utils/dateformat.py"
+      ]
+    },
+    {
+      "path": "django/utils/timezone.py",
+      "score": 14,
+      "matched_identifiers": [
+        "__init__",
+        "get_default_timezone",
+        "is_aware",
+        "is_naive"
+      ],
+      "reasons": [
+        "graph_neighbor_imported_by_top",
+        "graph_neighbor_import_package",
+        "graph_neighbor_called_symbol:__init__,get_default_timezone,is_aware"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {
+        "get_default_timezone": "def get_default_timezone():\n    \"\"\"\n    Return the default time zone as a tzinfo instance.\n\n    This is the time zone defined by settings.TIME_ZONE.\n    \"\"\"\n    return pytz.timezone(settings.TIME_ZONE)\n\n\n# This function exists for consistency with get_current_timezone_name\ndef get_default_timezone_name():\n    \"\"\"Return the name of the default time zone.\"\"\"\n    return _get_timezone_name(get_default_timezone())\n\n",
+        "is_aware": "def is_aware(value):\n    \"\"\"\n    Determine if a given datetime.datetime is aware.\n\n    The concept is defined in Python's docs:\n    https://docs.python.org/library/datetime.html#datetime.tzinfo\n\n    Assuming value.tzinfo is either None or a proper datetime.tzinfo,\n    value.utcoffset() implements the appropriate logic.\n    \"\"\"\n    return value.utcoffset() is not None\n\n\ndef is_naive(value):\n    \"\"\"",
+        "is_naive": "def is_naive(value):\n    \"\"\"\n    Determine if a given datetime.datetime is naive.\n\n    The concept is defined in Python's docs:\n    https://docs.python.org/library/datetime.html#datetime.tzinfo\n\n    Assuming value.tzinfo is either None or a proper datetime.tzinfo,\n    value.utcoffset() implements the appropriate logic.\n    \"\"\"\n    return value.utcoffset() is None\n\n\ndef make_aware(value, timezone=None, is_dst=None):\n    \"\"\"Make a naive datetime.datetime in a given time zone aware.\"\"\"",
+        "__init__": "    def __init__(self, timezone):\n        self.timezone = timezone\n\n    def __enter__(self):\n        self.old_timezone = getattr(_active, 'value', None)\n        if self.timezone is None:\n            deactivate()\n        else:\n            activate(self.timezone)\n\n    def __exit__(self, exc_type, exc_value, traceback):\n        if self.old_timezone is None:\n            deactivate()\n        else:\n            _active.value = self.old_timezone"
+      },
+      "top_level_functions": [
+        "get_fixed_timezone",
+        "get_default_timezone",
+        "get_default_timezone_name",
+        "get_current_timezone",
+        "get_current_timezone_name",
+        "activate",
+        "deactivate",
+        "template_localtime",
+        "localtime",
+        "localdate",
+        "now",
+        "is_aware",
+        "is_naive",
+        "make_aware",
+        "make_naive"
+      ],
+      "localization_signals": [
+        "graph_neighbor"
+      ],
+      "graph_neighbors": [
+        "django/forms/fields.py",
+        "django/template/defaultfilters.py",
+        "django/utils/dateformat.py"
+      ]
+    },
+    {
+      "path": "django/forms/formsets.py",
+      "score": 13,
+      "matched_identifiers": [
+        "__init__",
+        "clean",
+        "has_changed"
+      ],
+      "reasons": [
+        "graph_neighbor_import_package",
+        "graph_neighbor_imports_top",
+        "graph_neighbor_called_symbol:__init__,clean,has_changed"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {
+        "__init__": "    def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,\n                 initial=None, error_class=ErrorList, form_kwargs=None,\n                 error_messages=None):\n        self.is_bound = data is not None or files is not None\n        self.prefix = prefix or self.get_default_prefix()\n        self.auto_id = auto_id\n        self.data = data or {}\n        self.files = files or {}\n        self.initial = initial\n        self.form_kwargs = form_kwargs or {}\n        self.error_class = error_class\n        self._errors = None\n        self._non_form_errors = None\n\n        messages = {}",
+        "clean": "    def clean(self):\n        \"\"\"\n        Hook for doing any extra formset-wide cleaning after Form.clean() has\n        been called on every form. Any ValidationError raised by this method\n        will not be associated with a particular form; it will be accessible\n        via formset.non_form_errors()\n        \"\"\"\n        pass\n\n    def has_changed(self):\n        \"\"\"Return True if data in any form differs from initial.\"\"\"\n        return any(form.has_changed() for form in self)\n\n    def add_fields(self, form, index):\n        \"\"\"A hook for adding extra fields on to each form instance.\"\"\"",
+        "has_changed": "    def has_changed(self):\n        \"\"\"Return True if data in any form differs from initial.\"\"\"\n        return any(form.has_changed() for form in self)\n\n    def add_fields(self, form, index):\n        \"\"\"A hook for adding extra fields on to each form instance.\"\"\"\n        initial_form_count = self.initial_form_count()\n        if self.can_order:\n            # Only pre-fill the ordering field for initial forms.\n            if index is not None and index < initial_form_count:\n                form.fields[ORDERING_FIELD_NAME] = IntegerField(\n                    label=_('Order'),\n                    initial=index + 1,\n                    required=False,\n                    widget=self.get_ordering_widget(),"
+      },
+      "top_level_functions": [
+        "ManagementForm.clean",
+        "BaseFormSet.management_form",
+        "BaseFormSet.total_form_count",
+        "BaseFormSet.initial_form_count",
+        "BaseFormSet.forms",
+        "BaseFormSet.get_form_kwargs",
+        "BaseFormSet.initial_forms",
+        "BaseFormSet.extra_forms",
+        "BaseFormSet.empty_form",
+        "BaseFormSet.cleaned_data",
+        "BaseFormSet.deleted_forms",
+        "BaseFormSet.ordered_forms",
+        "BaseFormSet.get_default_prefix",
+        "BaseFormSet.get_ordering_widget",
+        "BaseFormSet.non_form_errors",
+        "BaseFormSet.errors",
+        "BaseFormSet.total_error_count",
+        "BaseFormSet.is_valid",
+        "BaseFormSet.full_clean",
+        "BaseFormSet.clean",
+        "BaseFormSet.has_changed",
+        "BaseFormSet.add_fields",
+        "BaseFormSet.add_prefix",
+        "BaseFormSet.is_multipart",
+        "BaseFormSet.media",
+        "BaseFormSet.as_table",
+        "BaseFormSet.as_p",
+        "BaseFormSet.as_ul",
+        "formset_factory",
+        "all_valid"
+      ],
+      "localization_signals": [
+        "graph_neighbor"
+      ],
+      "graph_neighbors": [
+        "django/forms/fields.py"
+      ]
+    },
+    {
+      "path": "django/forms/__init__.py",
+      "score": 12,
+      "matched_identifiers": [],
+      "reasons": [
+        "graph_neighbor_imported_by_top",
+        "graph_neighbor_import_package",
+        "graph_neighbor_imports_top"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {},
+      "top_level_functions": [],
+      "localization_signals": [
+        "graph_neighbor"
+      ],
+      "graph_neighbors": [
+        "django/forms/fields.py",
+        "django/template/defaultfilters.py",
+        "django/utils/dateformat.py"
+      ]
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/utils_tests/test_dateformat.py",
+      "score": 18,
+      "matched_identifiers": [
+        "DateFormat"
+      ],
+      "reasons": [
+        "test_path_related_to_class:DateFormat",
+        "test_name_matches_source_stem:dateformat",
+        "token_overlap:date,dateformat,format",
+        "internal_name_overlap:timezone",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "tests/admin_scripts/test_django_admin_py.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "tests/template_backends/test_django.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:django",
+        "same_module_area:django",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "tests/utils_tests/test_timesince.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:timesince",
+        "token_overlap:timesince",
+        "internal_name_overlap:timezone",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "tests/utils_tests/test_timezone.py",
+      "score": 11,
+      "matched_identifiers": [],
+      "reasons": [
+        "test_name_matches_source_stem:timezone",
+        "token_overlap:timezone",
+        "internal_name_overlap:timezone",
+        "has_test_functions"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unittest",
+    "evidence": [
+      "tests/template_backends/test_django.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_dateformat.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_timesince.py:unittest_or_django_test_import",
+      "tests/utils_tests/test_timezone.py:unittest_or_django_test_import",
+      "tests/admin_scripts/test_django_admin_py.py:unittest_or_django_test_import"
+    ],
+    "assert_style": [
+      "self.assert*"
+    ],
+    "runner": "django-test"
+  },
+  "indexed_file_count": 2692,
+  "indexed_test_file_count": 1830,
+  "available_imports": {
+    "django": [
+      "ValidationError",
+      "get_version",
+      "setup"
+    ],
+    "tests.template_backends.test_django": [
+      "DjangoTemplatesTests"
+    ],
+    "tests.utils_tests.test_dateformat": [
+      "DateFormatTests"
+    ],
+    "tests.utils_tests.test_timesince": [
+      "TimesinceTests"
+    ],
+    "tests.utils_tests.test_timezone": [
+      "TimezoneTests"
+    ],
+    "tests.admin_scripts.test_django_admin_py": [
+      "DeprecationTests"
+    ],
+    "django.forms.formsets": [
+      "BaseFormSet",
+      "ManagementForm",
+      "all_valid",
+      "formset_factory"
+    ],
+    "django.utils.timezone": [
+      "_get_timezone_name",
+      "activate",
+      "deactivate",
+      "get_current_timezone",
+      "get_current_timezone_name",
+      "get_default_timezone",
+      "get_default_timezone_name",
+      "get_fixed_timezone",
+      "is_aware",
+      "is_naive",
+      "localdate",
+      "localtime",
+      "make_aware",
+      "make_naive",
+      "now",
+      "override",
+      "template_localtime"
+    ],
+    "django.utils.timesince": [
+      "timesince",
+      "timeuntil"
+    ],
+    "django.utils.dateformat": [
+      "DateFormat",
+      "Formatter",
+      "TimeFormat",
+      "format",
+      "time_format"
+    ]
+  },
+  "test_example_snippet": "    def test_date(self):\n        d = date(2009, 5, 16)\n        self.assertEqual(date.fromtimestamp(int(format(d, 'U'))), d)\n\n    def test_naive_datetime(self):\n        dt = datetime(2009, 5, 16, 5, 30, 30)\n        self.assertEqual(datetime.fromtimestamp(int(format(dt, 'U'))), dt)\n\n    def test_naive_ambiguous_datetime(self):\n        # dt is ambiguous in Europe/Copenhagen. pytz raises an exception for\n        # the ambiguity, which results in an empty string.\n        dt = datetime(2015, 10, 25, 2, 30, 0)\n\n        # Try all formatters that involve self.timezone.\n        self.assertEqual(format(dt, 'I'), '')\n        self.assertEqual(format(dt, 'O'), '')\n        self.assertEqual(format(dt, 'T'), '')\n        self.assertEqual(format(dt, 'Z'), '')\n\n    @requires_tz_support\n    def test_datetime_with_local_tzinfo(self):\n        ltz = get_default_timezone()\n        dt = make_aware(datetime(2009, 5, 16, 5, 30, 30), ltz)\n        self.assertEqual(datetime.fromtimestamp(int(format(dt, 'U')), ltz), dt)\n        self.assertEqual(datetime.fromtimestamp(int(format(dt, 'U'))), dt.replace(tzinfo=None))\n\n    @requires_tz_support\n    def test_datetime_with_tzinfo(self):\n        tz = get_fixed_timezone(-510)\n        ltz = get_default_timezone()\n        dt = make_aware(datetime(2009, 5, 16, 5, 30, 30), ltz)\n        self.assertEqual(datetime.fromtimestamp(int(format(dt, 'U')), tz), dt)\n        self.assertEqual(datetime.fromtimestamp(int(format(dt, 'U')), ltz), dt)\n        # astimezone() is safe here because the target timezone doesn't have DST\n        self.assertEqual(datetime.fromtimestamp(int(format(dt, 'U'))), dt.astimezone(ltz).replace(tzinfo=None))",
+  "conftest_fixtures": {},
+  "test_symbol_catalog": {
+    "tests/utils_tests/test_dateformat.py": {
+      "imports": [
+        "from datetime import date, datetime",
+        "from django.test import SimpleTestCase, override_settings",
+        "from django.test.utils import TZ_SUPPORT, requires_tz_support",
+        "from django.utils import dateformat, translation",
+        "from django.utils.dateformat import format",
+        "from django.utils.timezone import get_default_timezone, get_fixed_timezone, make_aware, utc"
+      ],
+      "imported_symbols": [
+        "SimpleTestCase",
+        "TZ_SUPPORT",
+        "date",
+        "dateformat",
+        "datetime",
+        "format",
+        "get_default_timezone",
+        "get_fixed_timezone",
+        "make_aware",
+        "override_settings",
+        "requires_tz_support",
+        "translation",
+        "utc"
+      ],
+      "classes": [
+        "DateFormatTests"
+      ],
+      "models": [],
+      "helpers": [
+        "setUp",
+        "tearDown"
+      ],
+      "collection_risk": []
+    },
+    "tests/admin_scripts/test_django_admin_py.py": {
+      "imports": [
+        "from django.test import SimpleTestCase",
+        "import django",
+        "import os",
+        "import subprocess",
+        "import sys"
+      ],
+      "imported_symbols": [
+        "SimpleTestCase",
+        "django",
+        "os",
+        "subprocess",
+        "sys"
+      ],
+      "classes": [
+        "DeprecationTests"
+      ],
+      "models": [],
+      "helpers": [
+        "_run_test",
+        "setUp"
+      ],
+      "collection_risk": []
+    },
+    "tests/template_backends/test_django.py": {
+      "imports": [
+        "from django.template import Context, EngineHandler, RequestContext",
+        "from django.template.backends.django import DjangoTemplates",
+        "from django.template.library import InvalidTemplateLibrary",
+        "from django.test import RequestFactory, override_settings",
+        "from pathlib import Path",
+        "from template_tests.test_response import test_processor_name",
+        "from test_dummy import TemplateStringsTests"
+      ],
+      "imported_symbols": [
+        "Context",
+        "DjangoTemplates",
+        "EngineHandler",
+        "InvalidTemplateLibrary",
+        "Path",
+        "RequestContext",
+        "RequestFactory",
+        "TemplateStringsTests",
+        "override_settings",
+        "test_processor_name"
+      ],
+      "classes": [
+        "DjangoTemplatesTests"
+      ],
+      "models": [],
+      "helpers": [],
+      "collection_risk": []
+    },
+    "tests/utils_tests/test_timesince.py": {
+      "imports": [
+        "from django.test import TestCase",
+        "from django.test.utils import requires_tz_support",
+        "from django.utils import timezone, translation",
+        "from django.utils.timesince import timesince, timeuntil",
+        "from django.utils.translation import npgettext_lazy",
+        "import datetime"
+      ],
+      "imported_symbols": [
+        "TestCase",
+        "datetime",
+        "npgettext_lazy",
+        "requires_tz_support",
+        "timesince",
+        "timeuntil",
+        "timezone",
+        "translation"
+      ],
+      "classes": [
+        "TimesinceTests",
+        "naive"
+      ],
+      "models": [],
+      "helpers": [
+        "setUp",
+        "utcoffset"
+      ],
+      "collection_risk": []
+    },
+    "tests/utils_tests/test_timezone.py": {
+      "imports": [
+        "from django.test import SimpleTestCase, override_settings",
+        "from django.utils import timezone",
+        "from unittest import mock",
+        "import datetime",
+        "import pytz"
+      ],
+      "imported_symbols": [
+        "SimpleTestCase",
+        "datetime",
+        "mock",
+        "override_settings",
+        "pytz",
+        "timezone"
+      ],
+      "classes": [
+        "TimezoneTests"
+      ],
+      "models": [],
+      "helpers": [
+        "func_tz_eat",
+        "func_tz_none"
+      ],
+      "collection_risk": []
+    }
+  }
+}

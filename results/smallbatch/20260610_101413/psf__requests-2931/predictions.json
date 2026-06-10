@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "psf__requests-2931",
+    "model_patch": "--- a/test_requests.py\n+++ b/test_requests.py\n@@ -1739,3 +1739,16 @@\n \n if __name__ == '__main__':\n     unittest.main()\n+\n+import json\n+def test_put_with_binary_payload_repro():\n+    from requests.models import PreparedRequest\n+    from unittest.mock import patch\n+    req = PreparedRequest()\n+    req.prepare(method='PUT', url='http://httpbin.org/put', data=u\"ööö\".encode(\"utf-8\"))\n+    with patch('requests.sessions.Session.send') as mock_send:\n+        mock_send.return_value.status_code = 200\n+        mock_send.return_value.json.return_value = {'data': u'ööö'}\n+        response = requests.put(req.url, data=req.body)\n+        assert response.status_code == 200\n+        assert response.json()['data'] == u'ööö'\n",
+    "patch_sha256": "10dce18b01b1bca4c377f412d290b2cf00591336b7985b258bd8bde1859da23a"
+  }
+]

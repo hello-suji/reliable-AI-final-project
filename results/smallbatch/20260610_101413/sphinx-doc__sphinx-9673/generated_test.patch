@@ -1,0 +1,56 @@
+--- a/tests/roots/test-domain-cpp-intersphinx/conf.py
++++ b/tests/roots/test-domain-cpp-intersphinx/conf.py
+@@ -2,3 +2,53 @@
+ extensions = [
+ 	'sphinx.ext.intersphinx',
+ ]
++
++import tempfile
++import os
++from sphinx.application import Sphinx
++from sphinx.ext.autodoc import DocumenterBridge
++from sphinx.ext.napoleon import napoleon_setup
++
++
++def test_autodoc_typehints_description_target_with_napoleon_repro():
++    srcdir = tempfile.mkdtemp()
++    confdir = srcdir
++    outdir = tempfile.mkdtemp()
++    doctreedir = tempfile.mkdtemp()
++    buildername = 'html'
++    
++    with open(os.path.join(srcdir, 'conf.py'), 'w') as f:
++        f.write('extensions = [\'sphinx.ext.autodoc\', \'sphinx.ext.napoleon\']\n')
++        f.write('autodoc_typehints = \'description\'\n')
++        f.write('autodoc_typehints_description_target = \'documented\'\n')
++        f.write('napoleon_numpy_docstring = False\n')
++    
++    with open(os.path.join(srcdir, 'index.rst'), 'w') as f:
++        f.write('Test Module\n===========\n\n')
++        f.write('.. automodule:: test_module\n   :members:\n')
++    
++    with open(os.path.join(srcdir, 'test_module.py'), 'w') as f:
++        f.write('def test_function_repro(param1, param2):\n')
++        f.write('    \"\"\"\n')
++        f.write('    Description.\n')
++        f.write('\n')
++        f.write('    Parameters:\n')
++        f.write('        param1: First parameter.\n')
++        f.write('        param2: Second parameter.\n')
++        f.write('\n')
++        f.write('    Returns:\n')
++        f.write('        The returned value.\n')
++        f.write('    \"\"\"\n')
++        f.write('    return param1 + param2\n')
++    
++    app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++    app.setup_extension('sphinx.ext.autodoc')
++    app.setup_extension('sphinx.ext.napoleon')
++    app.build()
++    
++    with open(os.path.join(outdir, 'index.html'), 'r') as f:
++        html_content = f.read()
++    
++    assert 'Returns:' in html_content
++    assert 'The returned value.' in html_content
++    assert 'rtype' not in html_content

@@ -1,0 +1,28 @@
+--- a/tests/_core/test_plot.py
++++ b/tests/_core/test_plot.py
+@@ -2057,3 +2057,25 @@
+     def test_default_repr(self):
+ 
+         assert repr(Default()) == "<default>"
++
++import matplotlib.pyplot as plt
++import seaborn as sns
++import seaborn.objects as so
++
++
++def test_legend_large_numbers_offset_repro():
++    penguins = sns.load_dataset("penguins")
++    penguins["body_mass_mg"] = penguins["body_mass_g"] * 1000
++    plot = (
++        so.Plot(
++            penguins, x="bill_length_mm", y="bill_depth_mm",
++            color="species", pointsize="body_mass_mg",
++        )
++        .add(so.Dot())
++    )
++    _, ax = plt.subplots()
++    plot.draw(ax)
++    legend = ax.get_legend()
++    labels = [text.get_text() for text in legend.get_texts()]
++    # Assert that the legend labels contain the expected scientific notation
++    assert any('1e+06' in label for label in labels)

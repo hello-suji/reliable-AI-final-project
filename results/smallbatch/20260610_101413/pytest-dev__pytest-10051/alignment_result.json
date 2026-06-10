@@ -1,0 +1,131 @@
+{
+  "iteration": 5,
+  "failure_type": "NO_COVERAGE",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.9546,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.8182
+    },
+    "issue_alignment_score": 0.7222,
+    "coverage_score": 0.0,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": true,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "coverage_tool_no_data_no_line_evidence",
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "의심 위치 커버리지 없음 (coverage=0.00). 테스트가 타겟 소스 파일을 실행하지 않습니다.",
+  "feedback": {
+    "failure_type": "NO_COVERAGE",
+    "diagnosis": "의심 위치 커버리지 없음 (coverage=0.00). 테스트가 타겟 소스 파일을 실행하지 않습니다.",
+    "oracle_additions": [],
+    "stimulus_additions": [
+      "테스트는 src/_pytest/logging.py 파일의 코드를 직접 실행해야 한다.",
+      "테스트는 get_records 함수를 직접 호출해야 한다.",
+      "이슈 원문 호출 패턴: import logging\r\n\r\ndef test(caplog) -> None:\r\n    def verify_consistency() -> None:\r\n        assert caplog.get_records(\"call\") == caplog.records\r\n\r\n    verify_consistency()\r\n    logging.warning(\"test\")",
+      "이슈 원문 호출 패턴: Package    Version\r\n---------- -------\r\nattrs      21.4.0\r\niniconfig  1.1.1\r\npackaging  21.3\r\npip        22.0.4\r\npluggy     1.0.0\r\npy         1.11.0\r\npyparsing  3.0.8\r\npytest     7.1.1\r\nsetuptools 60."
+    ],
+    "precondition_additions": [],
+    "expected_failure_override": "",
+    "switch_scenario": true,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S2",
+    "target_location": {
+      "source_file": "src/_pytest/logging.py",
+      "target_function": "get_records",
+      "related_classes": [
+        "LogCaptureFixture"
+      ],
+      "candidate_test_file": "testing/test_warning_types.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import logging module",
+      "Set up a test function using pytest fixture caplog"
+    ],
+    "execution_stimulus": [
+      "Log a warning message",
+      "Call caplog.clear()",
+      "Log another warning message",
+      "Retrieve records using caplog.get_records()",
+      "[iteration-4 feedback] 테스트는 src/_pytest/logging.py 파일의 코드를 직접 실행해야 한다.",
+      "[iteration-4 feedback] 테스트는 get_records 함수를 직접 호출해야 한다.",
+      "[iteration-5 feedback] 테스트는 src/_pytest/logging.py 파일의 코드를 직접 실행해야 한다.",
+      "[iteration-5 feedback] 테스트는 get_records 함수를 직접 호출해야 한다."
+    ],
+    "expected_failure": "The retrieved records do not include the new log message after caplog.clear() was called",
+    "relevant_source_files": [
+      "src/_pytest/logging.py",
+      "src/_pytest/pytester.py",
+      "src/_pytest/recwarn.py"
+    ],
+    "relevant_test_files": [
+      "testing/test_pytester.py",
+      "testing/code/test_code.py",
+      "testing/test_recwarn.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [
+        "caplog"
+      ],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_caplog_get_records_after_clear(caplog):\n    import logging\n    logging.warning('first')\n    caplog.clear()\n    logging.warning('second')\n    assert caplog.get_records('call') == [<LogRecord: root, 30, 'second'>]"
+      }
+    ],
+    "expected_outputs": [
+      "[\"<LogRecord: root, 30, 'second'>\"]"
+    ],
+    "actual_outputs": [
+      "[\"<LogRecord: root, 30, 'first'>\"]"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "clear",
+        "get_records"
+      ],
+      "classes": [
+        "LogCaptureFixture"
+      ]
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected"
+  },
+  "should_continue": true,
+  "test_results": {
+    "testing/test_pytester.py::test_caplog_get_records_after_clear_repro": "FAILED"
+  },
+  "coverage_summary": {},
+  "failure_type_detail": ""
+}

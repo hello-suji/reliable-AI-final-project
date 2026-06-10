@@ -1,0 +1,153 @@
+{
+  "iteration": 5,
+  "failure_type": "NOT_FAILED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.5,
+    "bug_fail_features": {
+      "f_fail": 0.0,
+      "f_assert": 1.0,
+      "f_symptom": 1.0
+    },
+    "issue_alignment_score": 0.1667,
+    "coverage_score": 0.14,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": false,
+    "strong_issue_evidence": false,
+    "coverage_fallback_reason": "",
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "issue_repro_code",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 1,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "버그 코드에서 테스트가 FAIL하지 않음 (bug_fail=0.5). assertion이 버그 동작 대신 정상 동작을 확인하고 있을 수 있습니다. 복합 게이트 미달: s_b=0.500<τ_b=0.700; s_c=0.140<τ_c=0.600; s_a=0.167<τ_a=0.650",
+  "feedback": {
+    "failure_type": "NOT_FAILED",
+    "diagnosis": "버그 코드에서 테스트가 FAIL하지 않음 (bug_fail=0.5). assertion이 버그 동작 대신 정상 동작을 확인하고 있을 수 있습니다. 복합 게이트 미달: s_b=0.500<τ_b=0.700; s_c=0.140<τ_c=0.600; s_a=0.167<τ_a=0.650",
+    "oracle_additions": [
+      "현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert not app.statuscode",
+      "위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+      "assertion은 버그 수정 후의 올바른 결과를 기대해야 한다.",
+      "복합 미달 보강: 이슈의 입력, 기대 동작, 핵심 식별자를 같은 테스트 흐름 안에서 검증하라."
+    ],
+    "stimulus_additions": [
+      "복합 미달 보강: 테스트가 sphinx/environment/adapters/toctree.py 경로를 실제로 지나가도록 입력/setup을 바꿔라."
+    ],
+    "precondition_additions": [],
+    "expected_failure_override": "패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다. 현재 테스트는 before-patch에서 충분히 실패하지 않는다. 버그 입력을 직접 실행하고 fix 후 기대 동작을 assert하라.",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sphinx/environment/adapters/toctree.py",
+      "target_function": "",
+      "related_classes": [],
+      "candidate_test_file": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "[iteration-4 feedback] 테스트는 sphinx/environment/adapters/toctree.py 파일의 코드를 직접 실행해야 한다.",
+      "[iteration-4 feedback] 이슈 원문 호출 패턴: * :ref:`genindex`\r\n* :ref:`modindex`\r\n* :ref:`search`",
+      "[iteration-5 feedback] 복합 미달 보강: 테스트가 sphinx/environment/adapters/toctree.py 경로를 실제로 지나가도록 입력/setup을 바꿔라."
+    ],
+    "expected_failure": "The following directive should be possible and do not rise errors: [iteration-5 feedback] 패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다. 현재 테스트는 before-patch에서 충분히 실패하지 않는다. 버그 입력을 직접 실행하고 fix 후 기대 동작을 assert하라.",
+    "relevant_source_files": [
+      "sphinx/environment/adapters/toctree.py",
+      "sphinx/environment/collectors/toctree.py",
+      "sphinx/ext/autodoc/directive.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "tests/roots/test-ext-inheritance_diagram/example/sphinx.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "* :ref:`genindex`\r\n* :ref:`modindex`\r\n* :ref:`search`"
+      },
+      {
+        "language": "python",
+        "code": ".. toctree::\r\n   :maxdepth: 1\r\n   :caption: Indices and tables\r\n\r\n   genindex \r\n   modindex\r\n   search"
+      },
+      {
+        "language": "python",
+        "code": "$ make html\r\n...\r\n.../index.rst:30: WARNING: toctree contains reference to nonexisting document 'genindex'\r\n.../index.rst:30: WARNING: toctree contains reference to nonexisting document 'modindex'\r\n.../index.rst:30: WARNING: toctree contains reference to nonexisting document 'search'\r\n..."
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For warning regressions, use pytest.warns or warnings.catch_warnings around the minimal triggering call. [iteration-5 feedback] 현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert not app.statuscode 위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "issue_repro_code",
+      "rule": "Do not assert warning presence alone; verify the fixed value/state or no-warning success path."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": true,
+  "test_results": {
+    "tests/test_ext_autodoc.py::test_autodoc_directive_behavior_repro": "PASSED"
+  },
+  "coverage_summary": {
+    "sphinx/builders/latex/constants.py": {
+      "cover": 100.0,
+      "stmts": 9,
+      "miss": 0
+    },
+    "sphinx/builders/latex/nodes.py": {
+      "cover": 100.0,
+      "stmts": 11,
+      "miss": 0
+    },
+    "sphinx/cmd/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    },
+    "sphinx/environment/adapters/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    },
+    "sphinx/ext/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

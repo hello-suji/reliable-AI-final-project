@@ -1,0 +1,146 @@
+{
+  "iteration": 3,
+  "failure_type": "ALIGNED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.975,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.9
+    },
+    "issue_alignment_score": 0.875,
+    "coverage_score": 1.0,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [
+      "oracle_type=last_resort_structural"
+    ],
+    "target_verified": true,
+    "strong_issue_evidence": false,
+    "coverage_fallback_reason": "",
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Gate warnings: oracle_type=last_resort_structural",
+  "feedback": {
+    "failure_type": "ALIGNED",
+    "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Gate warnings: oracle_type=last_resort_structural",
+    "oracle_additions": [],
+    "stimulus_additions": [],
+    "precondition_additions": [],
+    "expected_failure_override": "",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "reduce",
+      "related_classes": [
+        "CreateModel",
+        "AlterModelOptions"
+      ],
+      "candidate_test_file": "tests/custom_migration_operations/operations.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db.migrations.operations.models import CreateModel, AlterModelOptions",
+      "from django.db.migrations.state import ProjectState",
+      "from django.db import models",
+      "initial_state = ProjectState()",
+      "create_model_op = CreateModel('test_model', fields=[], options={'verbose_name': 'Initial Name'})",
+      "alter_options_op = AlterModelOptions('test_model', options={})",
+      "[iteration-2 feedback] 런타임 에러: AttributeError: 'list' object has no attribute 'options'. 이 에러가 발생한 원인을 분석해 테스트 코드를 수정하라. API 사용법이 잘못됐거나 잘못된 인자를 전달하고 있을 수 있다."
+    ],
+    "execution_stimulus": [
+      "new_ops = create_model_op.reduce(alter_options_op, 'app_label')"
+    ],
+    "expected_failure": "The resulting CreateModel operation should have its options cleared, but they remain unchanged.",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/db/migrations/operations/base.py",
+      "django/forms/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_migration_operations/operations.py",
+      "tests/postgres_tests/migrations/0002_create_test_models.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_squashmigrations_reduce_clears_options():\n    from django.db.migrations.operations.models import CreateModel, AlterModelOptions\n    from django.db.migrations.state import ProjectState\n    from django.db import models\n    initial_state = ProjectState()\n    create_model_op = CreateModel('test_model', fields=[], options={'verbose_name': 'Initial Name'})\n    alter_options_op = AlterModelOptions('test_model', options={})\n    new_ops = create_model_op.reduce(alter_options_op, 'app_label')\n    assert new_ops[0].options == {}, 'Options were not cleared'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "reduce"
+      ],
+      "classes": [
+        "CreateModel",
+        "AlterModelOptions"
+      ]
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": false,
+  "test_results": {
+    "test_squashmigrations_reduce_clears_options_repro (custom_migration_operations.operations.TestSquashMigrationsReduceClearsOptions)": "FAILED"
+  },
+  "coverage_summary": {
+    "django/__init__.py": {
+      "cover": 100.0,
+      "stmts": 12,
+      "miss": 0
+    },
+    "django/apps/__init__.py": {
+      "cover": 100.0,
+      "stmts": 3,
+      "miss": 0
+    },
+    "django/conf/global_settings.py": {
+      "cover": 100.0,
+      "stmts": 148,
+      "miss": 0
+    },
+    "django/conf/locale/__init__.py": {
+      "cover": 100.0,
+      "stmts": 1,
+      "miss": 0
+    },
+    "django/contrib/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

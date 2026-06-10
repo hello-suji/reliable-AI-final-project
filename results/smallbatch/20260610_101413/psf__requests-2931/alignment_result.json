@@ -1,0 +1,139 @@
+{
+  "iteration": 2,
+  "failure_type": "ALIGNED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 1.0,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 1.0
+    },
+    "issue_alignment_score": 0.8333,
+    "coverage_score": 1.0,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [
+      "oracle_type=last_resort_structural"
+    ],
+    "target_verified": true,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Gate warnings: oracle_type=last_resort_structural",
+  "feedback": {
+    "failure_type": "ALIGNED",
+    "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Gate warnings: oracle_type=last_resort_structural",
+    "oracle_additions": [],
+    "stimulus_additions": [],
+    "precondition_additions": [],
+    "expected_failure_override": "",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "requests/api.py",
+      "target_function": "put",
+      "related_classes": [],
+      "candidate_test_file": "test_requests.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where put can be called."
+    ],
+    "execution_stimulus": [
+      "Call put with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "Request with binary payload fails due to calling to_native_string [iteration-1 feedback] 패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다.",
+    "relevant_source_files": [
+      "requests/api.py",
+      "requests/sessions.py",
+      "docs/conf.py"
+    ],
+    "relevant_test_files": [
+      "test_requests.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import requests\nrequests.put(\"http://httpbin.org/put\", data=u\"ööö\".encode(\"utf-8\"))"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "encode",
+        "put"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For requests/http issues, never call external URLs; inspect PreparedRequest/request headers or use existing local helpers. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. [iteration-1 feedback] 현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert response.status_code == 200 위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": false,
+  "test_results": {
+    "test_requests.py::test_put_with_binary_payload_repro": "FAILED"
+  },
+  "coverage_summary": {
+    "requests/packages/urllib3/contrib/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    },
+    "requests/packages/urllib3/packages/__init__.py": {
+      "cover": 100.0,
+      "stmts": 3,
+      "miss": 0
+    },
+    "requests/packages/urllib3/util/__init__.py": {
+      "cover": 100.0,
+      "stmts": 9,
+      "miss": 0
+    },
+    "requests/status_codes.py": {
+      "cover": 100.0,
+      "stmts": 8,
+      "miss": 0
+    },
+    "requests/__init__.py": {
+      "cover": 81.0,
+      "stmts": 27,
+      "miss": 5
+    }
+  },
+  "failure_type_detail": ""
+}

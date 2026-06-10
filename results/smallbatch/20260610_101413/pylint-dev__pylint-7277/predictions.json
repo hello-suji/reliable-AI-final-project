@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "pylint-dev__pylint-7277",
+    "model_patch": "--- a/tests/lint/test_pylinter.py\n+++ b/tests/lint/test_pylinter.py\n@@ -41,3 +41,14 @@\n     linter.check(\"myfile.py\")\n     msg = recwarn.pop()\n     assert \"check function will only accept sequence\" in str(msg)\n+\n+import os\n+import sys\n+import runpy\n+\n+def test_pylint_removes_first_item_from_sys_path_repro(linter: PyLinter) -> None:\n+    original_sys_path = sys.path.copy()\n+    sys.path.insert(0, \"something\")\n+    runpy.run_module('pylint', run_name=\"__main__\", alter_sys=True)\n+    assert sys.path[0] in [\"\", \".\", os.getcwd()], \"First item of sys.path should not be removed if it's '', '.', or os.getcwd()\"\n+    sys.path = original_sys_path\n",
+    "patch_sha256": "ee97876c1df40426f8c9246039a4c152dcc8c1c28d313ff39bdd778f0065953a"
+  }
+]

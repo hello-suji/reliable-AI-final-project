@@ -1,0 +1,143 @@
+{
+  "iteration": 1,
+  "failure_type": "ALIGNED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 1.0,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 1.0
+    },
+    "issue_alignment_score": 1.0,
+    "coverage_score": 0.6667,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": true,
+    "strong_issue_evidence": false,
+    "coverage_fallback_reason": "",
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다.",
+  "feedback": {
+    "failure_type": "ALIGNED",
+    "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다.",
+    "oracle_additions": [],
+    "stimulus_additions": [],
+    "precondition_additions": [],
+    "expected_failure_override": "",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/utils/dateformat.py",
+      "target_function": "Y",
+      "related_classes": [
+        "DateFormat"
+      ],
+      "candidate_test_file": "tests/utils_tests/test_dateformat.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "from django.utils.dateformat import DateFormat",
+      "from datetime import date"
+    ],
+    "execution_stimulus": [
+      "df = DateFormat(date(999, 1, 1))",
+      "result = df.format('Y')"
+    ],
+    "expected_failure": "The result should be '0999' but it returns '999'.",
+    "relevant_source_files": [
+      "django/utils/dateformat.py",
+      "django/utils/timesince.py",
+      "django/utils/timezone.py"
+    ],
+    "relevant_test_files": [
+      "tests/utils_tests/test_dateformat.py",
+      "tests/admin_scripts/test_django_admin_py.py",
+      "tests/template_backends/test_django.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_Y_specifier_for_year_less_than_1000():\n    from django.utils.dateformat import DateFormat\n    from datetime import date\n    df = DateFormat(date(999, 1, 1))\n    result = df.format('Y')\n    assert result == '0999'"
+      }
+    ],
+    "expected_outputs": [
+      "0999"
+    ],
+    "actual_outputs": [
+      "999"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "Y"
+      ],
+      "classes": [
+        "DateFormat"
+      ]
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value. For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected"
+  },
+  "should_continue": false,
+  "test_results": {
+    "test_Y_specifier_for_year_less_than_1000_repro (utils_tests.test_dateformat.TestDateFormatYearSpecifier)": "FAILED"
+  },
+  "coverage_summary": {
+    "django/__init__.py": {
+      "cover": 100.0,
+      "stmts": 12,
+      "miss": 0
+    },
+    "django/apps/__init__.py": {
+      "cover": 100.0,
+      "stmts": 3,
+      "miss": 0
+    },
+    "django/conf/global_settings.py": {
+      "cover": 100.0,
+      "stmts": 146,
+      "miss": 0
+    },
+    "django/conf/locale/__init__.py": {
+      "cover": 100.0,
+      "stmts": 1,
+      "miss": 0
+    },
+    "django/conf/urls/__init__.py": {
+      "cover": 100.0,
+      "stmts": 7,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

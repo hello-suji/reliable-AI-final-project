@@ -1,0 +1,24 @@
+{
+  "instance_id": "django__django-13786",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/django__django-13786/predictions.json",
+  "run_id": "debug-django__django-13786",
+  "harness_command": [
+    "python",
+    "-m",
+    "tddbench.harness.run_evaluation",
+    "--dataset_name",
+    "TDD_Bench.json",
+    "--predictions_path",
+    "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/django__django-13786/predictions.json",
+    "--max_workers",
+    "1",
+    "--instance_ids",
+    "django__django-13786",
+    "--run_id",
+    "debug-django__django-13786"
+  ],
+  "harness_returncode": 0,
+  "harness_stdout": "Using gold patch predictions\nRunning 1 unevaluated instances...\nBase image sweb.base.x86_64:latest already exists, skipping build.\nBase images built successfully.\nNo environment images need to be built.\nFound 1 existing instance images. Will reuse them.\nRunning 1 instances...\n{'tests/custom_migration_operations/operations.py': ['test_squashmigrations_reduce_clears_options_repro']}\n['tests/custom_migration_operations/operations.py::TestSquashMigrationsReduceClearsOptions::test_squashmigrations_reduce_clears_options_repro']\nPointer 1\n[144]\n-------------------------------Before Patch-------------------------------\n{'test_squashmigrations_reduce_clears_options_repro (custom_migration_operations.operations.TestSquashMigrationsReduceClearsOptions)': 'FAILED', 'test_squashmigrations_reduce_clears_options_repro': 'FAILED'}\n---------------------------------------------------------------------------------\n\n\n\nPointer 2\n[140, 141, 142, 143, 148]\n-------------------------------After Patch-------------------------------\n{'test_squashmigrations_reduce_clears_options_repro (custom_migration_operations.operations.TestSquashMigrationsReduceClearsOptions)': 'PASSED'}\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Coverage-----------------------------------------\n1.0\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Final Report--------------------------------------\n{'django__django-13786': {'contributing_functions': ['tests/custom_migration_operations/operations.py::TestSquashMigrationsReduceClearsOptions::test_squashmigrations_reduce_clears_options_repro'], 'test_before_patch': {'test_squashmigrations_reduce_clears_options_repro (custom_migration_operations.operations.TestSquashMigrationsReduceClearsOptions)': 'FAILED', 'test_squashmigrations_reduce_clears_options_repro': 'FAILED'}, 'test_after_patch': {'test_squashmigrations_reduce_clears_options_repro (custom_migration_operations.operations.TestSquashMigrationsReduceClearsOptions)': 'PASSED'}, 'total_changed': 6, 'total_missed': 0, 'cov_score': 1.0, 'final_score': 1.0, 'resolved': True}}\n---------------------------------------------------------------------------------\n\n\n\nAll instances run.\nCleaning cached images...\nRemoved 0 images.\nTotal instances: 1\nInstances submitted: 1\nInstances completed: 1\nInstances incomplete: 0\nInstances resolved: 1\nInstances unresolved: 0\nInstances with empty patches: 0\nInstances with errors: 0\nUnstopped containers: 0\nUnremoved images: 1\nFinal score: 1.0\nReport written to __home__selab__kcc-2026__outputs__smallbatch__20260610_101413__django__django-13786__predictions.json.debug-django__django-13786.json\n",
+  "harness_stderr": "<frozen runpy>:128: RuntimeWarning: 'tddbench.harness.run_evaluation' found in sys.modules after import of package 'tddbench.harness', but prior to execution of 'tddbench.harness.run_evaluation'; this may result in unpredictable behaviour\n\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|██████████| 1/1 [00:40<00:00, 40.43s/it]\n100%|██████████| 1/1 [00:40<00:00, 40.43s/it]\n"
+}

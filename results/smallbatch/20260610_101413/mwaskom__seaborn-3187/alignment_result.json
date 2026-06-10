@@ -1,0 +1,158 @@
+{
+  "iteration": 5,
+  "failure_type": "NO_COVERAGE",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.725,
+    "bug_fail_features": {
+      "f_fail": 0.5,
+      "f_assert": 1.0,
+      "f_symptom": 0.9
+    },
+    "issue_alignment_score": 0.7778,
+    "coverage_score": 0.17,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": false,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "의심 위치 커버리지 없음 (coverage=0.17). 테스트가 타겟 소스 파일을 실행하지 않습니다.",
+  "feedback": {
+    "failure_type": "NO_COVERAGE",
+    "diagnosis": "의심 위치 커버리지 없음 (coverage=0.17). 테스트가 타겟 소스 파일을 실행하지 않습니다.",
+    "oracle_additions": [],
+    "stimulus_additions": [
+      "테스트는 seaborn/_core/scales.py 파일의 코드를 직접 실행해야 한다.",
+      "테스트는 add 함수를 직접 호출해야 한다.",
+      "이슈 원문 호출 패턴: import seaborn as sns\r\nimport seaborn.objects as so\r\n\r\npenguins = sns.load_dataset(\"Penguins\")\r\npenguins[\"body_mass_mg\"] = penguins[\"body_mass_g\"]*1000\r\n(\r\n    so.Plot(\r\n        penguins, x=\"bill_leng"
+    ],
+    "precondition_additions": [],
+    "expected_failure_override": "",
+    "switch_scenario": true,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "seaborn/_core/scales.py",
+      "target_function": "add",
+      "related_classes": [
+        "Dot",
+        "Penguins",
+        "Plot"
+      ],
+      "candidate_test_file": "tests/_core/test_plot.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where add can be called."
+    ],
+    "execution_stimulus": [
+      "Call add with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "[iteration-4 feedback] 테스트는 seaborn/_core/scales.py 파일의 코드를 직접 실행해야 한다.",
+      "[iteration-4 feedback] 테스트는 add 함수를 직접 호출해야 한다.",
+      "[iteration-5 feedback] 테스트는 seaborn/_core/scales.py 파일의 코드를 직접 실행해야 한다.",
+      "[iteration-5 feedback] 테스트는 add 함수를 직접 호출해야 한다."
+    ],
+    "expected_failure": "Wrong legend values of large ranges",
+    "relevant_source_files": [
+      "seaborn/_core/scales.py",
+      "seaborn/_core/plot.py",
+      "seaborn/utils.py"
+    ],
+    "relevant_test_files": [
+      "tests/_core/test_plot.py",
+      "tests/_core/test_scales.py",
+      "tests/_core/test_subplots.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import seaborn as sns\r\nimport seaborn.objects as so\r\n\r\npenguins = sns.load_dataset(\"Penguins\")\r\npenguins[\"body_mass_mg\"] = penguins[\"body_mass_g\"]*1000\r\n(\r\n    so.Plot(\r\n        penguins, x=\"bill_length_mm\", y=\"bill_depth_mm\",\r\n        color=\"species\", pointsize=\"body_mass_mg\",\r\n    )\r\n    .add(so.Dot())\r\n)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add",
+        "load_dataset"
+      ],
+      "classes": [
+        "Dot",
+        "Penguins",
+        "Plot",
+        "ScalarFormatter"
+      ],
+      "files": [
+        "seaborn/_core/scales.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": true,
+  "test_results": {
+    "tests/_core/test_plot.py::TestDefaultObject::test_default_repr": "PASSED",
+    "tests/_core/test_plot.py::test_legend_large_numbers_offset_repro": "FAILED"
+  },
+  "coverage_summary": {
+    "seaborn/__init__.py": {
+      "cover": 100.0,
+      "stmts": 16,
+      "miss": 0
+    },
+    "seaborn/_core/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    },
+    "seaborn/_core/typing.py": {
+      "cover": 100.0,
+      "stmts": 21,
+      "miss": 0
+    },
+    "seaborn/_decorators.py": {
+      "cover": 100.0,
+      "stmts": 10,
+      "miss": 0
+    },
+    "seaborn/_marks/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

@@ -1,0 +1,115 @@
+{
+  "selected_scenarios": [
+    {
+      "scenario_id": "S1",
+      "score": 1.0,
+      "decision": "accept",
+      "reasons": [
+        "required fields are present",
+        "target function is weakly aligned with issue clue",
+        "related classes overlap with issue classes",
+        "source file is aligned with candidate source files",
+        "graph_expanded_source",
+        "source file has strong retrieval score",
+        "scenario targets the top-ranked source file",
+        "relevant test files align with candidate test files",
+        "candidate test file is explicitly aligned with candidate test files",
+        "candidate test file has strong retrieval score",
+        "execution stimulus mentions target function",
+        "expected_failure is concrete and checkable",
+        "target source file is also included in relevant source files",
+        "target_function verified to exist in source_file"
+      ],
+      "normalized_scenario": {
+        "scenario_id": "S1",
+        "target_location": {
+          "source_file": "xarray/core/dataarray.py",
+          "target_function": "__getitem__",
+          "related_classes": [
+            "DataArray",
+            "Expecting",
+            "Invalid"
+          ],
+          "candidate_test_file": "xarray/tests/test_dataarray.py",
+          "confidence": "medium"
+        },
+        "setup_steps": [
+          "Import the relevant module (framework: unittest).",
+          "Set up an environment where __getitem__ can be called."
+        ],
+        "execution_stimulus": [
+          "Call __getitem__ with the reproduction conditions from the issue.",
+          "Compare the result with the expected value."
+        ],
+        "expected_failure": "Naming a dimension \"method\" throws error when calling \".loc\"",
+        "relevant_source_files": [
+          "xarray/core/dataarray.py",
+          "xarray/core/resample.py",
+          "xarray/core/accessor_str.py"
+        ],
+        "relevant_test_files": [
+          "xarray/tests/test_dataarray.py",
+          "xarray/tests/test_dataset.py",
+          "xarray/tests/test_accessor_dt.py"
+        ],
+        "test_environment": {
+          "required_fixtures": [],
+          "runner": "unittest"
+        },
+        "reproduction_code": [
+          {
+            "language": "python",
+            "code": "import numpy as np\r\nfrom xarray import DataArray\r\nempty = np.zeros((2,2))\r\nD1 = DataArray(empty, dims=['dim1', 'dim2'],   coords={'dim1':['x', 'y'], 'dim2':['a', 'b']})\r\nD2 = DataArray(empty, dims=['dim1', 'method'], coords={'dim1':['x', 'y'], 'method':['a', 'b']})\r\n\r\nprint(D1.loc[dict(dim1='x', dim2='a')])    # works\r\nprint(D2.loc[dict(dim1='x', method='a')])  # does not work!!"
+          },
+          {
+            "language": "python",
+            "code": "ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest."
+          },
+          {
+            "language": "python",
+            "code": "import numpy as np\r\nfrom xarray import DataArray\r\nempty = np.zeros((2,2))\r\nD1 = DataArray(empty, dims=['dim1', 'dim2'],   coords={'dim1':['x', 'y'], 'dim2':['a', 'b']})\r\nD2 = DataArray(empty, dims=['dim1', 'method'], coords={'dim1':['x', 'y'], 'method':['a', 'b']})\r\n\r\nprint(D1.loc[dict(dim1='x', dim2='a')])    # works\r\nprint(D2.loc[dict(dim1='x', method='a')])  # does not work!!"
+          },
+          {
+            "language": "python",
+            "code": "ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest."
+          }
+        ],
+        "expected_outputs": [],
+        "actual_outputs": [
+          "ValueError: Invalid fill method. Expecting pad (ffill), backfill (bfill) or nearest."
+        ],
+        "error_keywords": [
+          "ValueError"
+        ],
+        "identifiers": {
+          "functions": [
+            "zeros"
+          ],
+          "classes": [
+            "DataArray",
+            "Expecting",
+            "Invalid"
+          ],
+          "files": [],
+          "exceptions": [
+            "ValueError"
+          ]
+        },
+        "oracle_hints": [
+          "Call the target API and assert a public invariant that excludes the buggy output.",
+          "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+        ],
+        "oracle": "Call the target API and assert a public invariant that excludes the buggy output. Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort.",
+        "oracle_contract": {
+          "oracle_type": "semantic_invariant",
+          "oracle_source": "actual_buggy_output",
+          "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+        },
+        "oracle_type": "semantic_invariant",
+        "oracle_source": "actual_buggy_output"
+      },
+      "force_selected": false
+    }
+  ],
+  "rejected_scenarios": []
+}

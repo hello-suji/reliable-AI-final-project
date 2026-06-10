@@ -1,0 +1,70 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "django/db/migrations/operations/models.py",
+      "target_function": "reduce",
+      "related_classes": [
+        "CreateModel",
+        "AlterModelOptions"
+      ],
+      "candidate_test_file": "tests/custom_migration_operations/operations.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from django.db.migrations.operations.models import CreateModel, AlterModelOptions",
+      "from django.db.migrations.state import ProjectState",
+      "from django.db import models",
+      "initial_state = ProjectState()",
+      "create_model_op = CreateModel('test_model', fields=[], options={'verbose_name': 'Initial Name'})",
+      "alter_options_op = AlterModelOptions('test_model', options={})"
+    ],
+    "execution_stimulus": [
+      "new_ops = create_model_op.reduce(alter_options_op, 'app_label')"
+    ],
+    "expected_failure": "The resulting CreateModel operation should have its options cleared, but they remain unchanged.",
+    "relevant_source_files": [
+      "django/db/migrations/operations/models.py",
+      "django/db/migrations/operations/base.py",
+      "django/forms/models.py"
+    ],
+    "relevant_test_files": [
+      "tests/custom_migration_operations/operations.py",
+      "tests/postgres_tests/migrations/0002_create_test_models.py",
+      "tests/invalid_models_tests/test_deprecated_fields.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "django-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_squashmigrations_reduce_clears_options():\n    from django.db.migrations.operations.models import CreateModel, AlterModelOptions\n    from django.db.migrations.state import ProjectState\n    from django.db import models\n    initial_state = ProjectState()\n    create_model_op = CreateModel('test_model', fields=[], options={'verbose_name': 'Initial Name'})\n    alter_options_op = AlterModelOptions('test_model', options={})\n    new_ops = create_model_op.reduce(alter_options_op, 'app_label')\n    assert new_ops[0].options == {}, 'Options were not cleared'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "reduce"
+      ],
+      "classes": [
+        "CreateModel",
+        "AlterModelOptions"
+      ]
+    },
+    "oracle_hints": [
+      "For Django, do not define inline models; reuse existing test models/imports from the target test file."
+    ],
+    "oracle": "For Django, do not define inline models; reuse existing test models/imports from the target test file.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic"
+  }
+]

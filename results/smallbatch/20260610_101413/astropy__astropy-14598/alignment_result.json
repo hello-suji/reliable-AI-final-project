@@ -1,0 +1,166 @@
+{
+  "iteration": 4,
+  "failure_type": "ALIGNED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 1.0,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 1.0
+    },
+    "issue_alignment_score": 0.8667,
+    "coverage_score": 0.875,
+    "oracle_confidence_score": 0.85,
+    "oracle_risk_flags": [
+      "negative_oracle_only"
+    ],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [
+      "oracle_type=last_resort_structural"
+    ],
+    "target_verified": true,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Oracle risk: negative_oracle_only Gate warnings: oracle_type=last_resort_structural",
+  "feedback": {
+    "failure_type": "ALIGNED",
+    "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Oracle risk: negative_oracle_only Gate warnings: oracle_type=last_resort_structural",
+    "oracle_additions": [
+      "`!= buggy value`만 검증하면 fix 후에도 실패할 수 있다. 가능한 positive oracle을 사용하라."
+    ],
+    "stimulus_additions": [],
+    "precondition_additions": [],
+    "expected_failure_override": "테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "astropy/io/fits/card.py",
+      "target_function": "fromstring",
+      "related_classes": [
+        "Card",
+        "Should"
+      ],
+      "candidate_test_file": "astropy/io/fits/tests/test_diff.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where fromstring can be called.",
+      "[iteration-3 feedback] 테스트에서 사용하는 모든 import는 repo 내에 실제 존재하는 모듈/심볼이어야 한다.",
+      "[iteration-3 feedback] 생성된 테스트 코드는 Python 구문 오류가 없어야 한다."
+    ],
+    "execution_stimulus": [
+      "Call fromstring with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue. [iteration-3 feedback] 테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다. [iteration-4 feedback] 테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "relevant_source_files": [
+      "astropy/io/fits/card.py",
+      "astropy/io/fits/hdu/base.py",
+      "astropy/io/fits/hdu/hdulist.py"
+    ],
+    "relevant_test_files": [
+      "astropy/io/fits/tests/test_diff.py",
+      "astropy/io/fits/tests/test_hdulist.py",
+      "astropy/io/fits/tests/test_header.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "In [39]: from astropy.io import fits\r\nIn [40]: for n in range(60, 70):\r\n    ...:     card1 = fits.Card('CONFIG', \"x\" * n + \"''\")\r\n    ...:     card2 = fits.Card.fromstring(str(card1))  # Should be the same as card1\r\n    ...:     print(n, card1.value == card2.value)\r\n    ...:     if card1.value != card2.value:\r\n    ...:         print(card1.value)\r\n    ...:         print(card2.value)"
+      },
+      {
+        "language": "python",
+        "code": "60 True\r\n61 True\r\n62 True\r\n63 True\r\n64 True\r\n65 False\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx''\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'\r\n66 True\r\n67 False\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx''\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'\r\n68 False\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx''\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'\r\n69 False\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx''\r\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'"
+      },
+      {
+        "language": "python",
+        "code": "In [39]: from astropy.io import fits\r\nIn [40]: for n in range(50, 70):\r\n    ...:     card1 = fits.Card('CONFIG', \"x\" * n + \"''\" + \"x\"*10)\r\n    ...:     card2 = fits.Card.fromstring(str(card1))\r\n    ...:     print(n, len(card1.value), card1.value == card2.value)"
+      },
+      {
+        "language": "python",
+        "code": "50 62 True\r\n51 63 True\r\n52 64 True\r\n53 65 True\r\n54 66 True\r\n55 67 False\r\n56 68 False\r\n57 69 False\r\n58 70 False\r\n59 71 False\r\n60 72 False\r\n61 73 False\r\n62 74 False\r\n63 75 False\r\n64 76 True\r\n65 77 False\r\n66 78 True\r\n67 79 False\r\n68 80 False\r\n69 81 False"
+      },
+      {
+        "language": "python",
+        "code": "from astropy.io import fits\r\nfor n in range(60, 70):\r\n    card1 = fits.Card('CONFIG', \"x\" * n + \"''\")\r\n    card2 = fits.Card.fromstring(str(card1))\r\n    print(n, len(card1.value), card1.value == card2.value)\r\n    if card1.value != card2.value:\r\n        print(card1.value)\r\n        print(card2.value)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "fromstring"
+      ],
+      "classes": [
+        "Card",
+        "Should"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. [iteration-3 feedback] `!= buggy value`만 검증하면 fix 후에도 실패할 수 있다. 가능한 positive oracle을 사용하라. [iteration-4 feedback] `!= buggy value`만 검증하면 fix 후에도 실패할 수 있다. 가능한 positive oracle을 사용하라.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": false,
+  "test_results": {
+    "astropy/io/fits/tests/test_diff.py::test_card_fromstring_null_string_handling_repro": "FAILED"
+  },
+  "coverage_summary": {
+    "astropy/_dev/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    },
+    "astropy/config/__init__.py": {
+      "cover": 100.0,
+      "stmts": 2,
+      "miss": 0
+    },
+    "astropy/constants/cgs.py": {
+      "cover": 100.0,
+      "stmts": 6,
+      "miss": 0
+    },
+    "astropy/constants/codata2018.py": {
+      "cover": 100.0,
+      "stmts": 34,
+      "miss": 0
+    },
+    "astropy/constants/config.py": {
+      "cover": 100.0,
+      "stmts": 6,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

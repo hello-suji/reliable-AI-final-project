@@ -1,0 +1,14 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-10908",
+  "final_score": 1.0,
+  "before_patch": {
+    "sklearn/feature_extraction/tests/test_text.py::test_get_feature_names_without_fitting_repro": "FAILED"
+  },
+  "after_patch": {
+    "sklearn/feature_extraction/tests/test_text.py::test_get_feature_names_without_fitting_repro": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "5926e1f5c3c229aebd25c643ed8b1572133b22d2c663af5f0a318ee7bc7b8c30",
+  "resolved": true
+}

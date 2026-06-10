@@ -1,0 +1,146 @@
+{
+  "iteration": 1,
+  "failure_type": "ALIGNED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 1.0,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 1.0
+    },
+    "issue_alignment_score": 1.0,
+    "coverage_score": 1.0,
+    "oracle_confidence_score": 0.85,
+    "oracle_risk_flags": [
+      "buggy_output_as_oracle"
+    ],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [
+      "soft_oracle_risk_flags=buggy_output_as_oracle"
+    ],
+    "target_verified": true,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Oracle risk: buggy_output_as_oracle Gate warnings: soft_oracle_risk_flags=buggy_output_as_oracle",
+  "feedback": {
+    "failure_type": "ALIGNED",
+    "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Oracle risk: buggy_output_as_oracle Gate warnings: soft_oracle_risk_flags=buggy_output_as_oracle",
+    "oracle_additions": [
+      "버그 출력만 oracle로 쓰지 말고 수정 후 올바른 기대 출력/동작을 검증하라."
+    ],
+    "stimulus_additions": [],
+    "precondition_additions": [],
+    "expected_failure_override": "테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sympy/geometry/point.py",
+      "target_function": "distance",
+      "related_classes": [
+        "Point"
+      ],
+      "candidate_test_file": "sympy/geometry/tests/test_point.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sympy.geometry import Point"
+    ],
+    "execution_stimulus": [
+      "p1 = Point(2, 0)",
+      "p2 = Point(1, 0, 2)",
+      "result = p1.distance(p2)"
+    ],
+    "expected_failure": "The distance calculation ignores the third dimension, resulting in an incorrect distance of 1 instead of sqrt(5) [iteration-1 feedback] 테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "relevant_source_files": [
+      "sympy/geometry/point.py",
+      "sympy/geometry/line.py",
+      "sympy/geometry/line3d.py"
+    ],
+    "relevant_test_files": [
+      "sympy/geometry/tests/test_point.py",
+      "sympy/geometry/tests/test_line.py",
+      "sympy/geometry/tests/test_plane.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "sympy-bin-test"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_distance_ignores_third_dimension():\n    from sympy.geometry import Point\n    p1 = Point(2, 0)\n    p2 = Point(1, 0, 2)\n    result = p1.distance(p2)\n    assert result != 1"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "1"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "distance"
+      ],
+      "classes": [
+        "Point"
+      ]
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. [iteration-1 feedback] 버그 출력만 oracle로 쓰지 말고 수정 후 올바른 기대 출력/동작을 검증하라.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "actual_buggy_output",
+      "rule": "Use != buggy value only on the real function result and only if no positive invariant is available."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "actual_buggy_output"
+  },
+  "should_continue": false,
+  "test_results": {
+    "test_distance_ignores_third_dimension_repro": "FAILED"
+  },
+  "coverage_summary": {
+    "sympy/assumptions/__init__.py": {
+      "cover": 100.0,
+      "stmts": 3,
+      "miss": 0
+    },
+    "sympy/calculus/__init__.py": {
+      "cover": 100.0,
+      "stmts": 4,
+      "miss": 0
+    },
+    "sympy/codegen/__init__.py": {
+      "cover": 100.0,
+      "stmts": 1,
+      "miss": 0
+    },
+    "sympy/concrete/__init__.py": {
+      "cover": 100.0,
+      "stmts": 2,
+      "miss": 0
+    },
+    "sympy/core/__init__.py": {
+      "cover": 100.0,
+      "stmts": 21,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

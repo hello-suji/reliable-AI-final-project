@@ -1,0 +1,34 @@
+--- a/tests/test_ext_autodoc.py
++++ b/tests/test_ext_autodoc.py
+@@ -2534,3 +2534,31 @@
+         '      docstring',
+         '',
+     ]
++
++import os
++import tempfile
++from sphinx.application import Sphinx
++from sphinx.ext.autodoc.directive import AutodocDirective
++
++
++def test_autodoc_directive_behavior_repro():
++    srcdir = tempfile.mkdtemp()
++    confdir = srcdir
++    outdir = tempfile.mkdtemp()
++    doctreedir = tempfile.mkdtemp()
++    buildername = 'html'
++
++    # Create a minimal conf.py
++    with open(os.path.join(confdir, 'conf.py'), 'w') as f:
++        f.write('extensions = ["sphinx.ext.autodoc"]\n')
++
++    # Create a minimal index.rst with the problem
++    with open(os.path.join(srcdir, 'index.rst'), 'w') as f:
++        f.write('.. autodoc:: some.module.SomeClass\n')
++
++    app = Sphinx(srcdir, confdir, outdir, doctreedir, buildername)
++    app.build()
++
++    # Verify the expected behavior here
++    # For example, check if the build was successful without errors
++    assert not app.statuscode

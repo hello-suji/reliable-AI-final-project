@@ -1,0 +1,24 @@
+{
+  "instance_id": "psf__requests-2931",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/psf__requests-2931/predictions.json",
+  "run_id": "debug-psf__requests-2931",
+  "harness_command": [
+    "python",
+    "-m",
+    "tddbench.harness.run_evaluation",
+    "--dataset_name",
+    "TDD_Bench.json",
+    "--predictions_path",
+    "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/psf__requests-2931/predictions.json",
+    "--max_workers",
+    "1",
+    "--instance_ids",
+    "psf__requests-2931",
+    "--run_id",
+    "debug-psf__requests-2931"
+  ],
+  "harness_returncode": 0,
+  "harness_stdout": "Using gold patch predictions\nRunning 1 unevaluated instances...\nBase image sweb.base.x86_64:latest already exists, skipping build.\nBase images built successfully.\nNo environment images need to be built.\nFound 1 existing instance images. Will reuse them.\nRunning 1 instances...\n{'test_requests.py': ['test_put_with_binary_payload_repro']}\n['test_requests.py::test_put_with_binary_payload_repro']\nPointer 1\n[84]\n-------------------------------Before Patch-------------------------------\n{'test_requests.py::test_put_with_binary_payload_repro': 'FAILED'}\n---------------------------------------------------------------------------------\n\n\n\nPointer 2\n[84, 388, 389]\n-------------------------------After Patch-------------------------------\n{'test_requests.py::test_put_with_binary_payload_repro': 'PASSED'}\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Coverage-----------------------------------------\n0.75\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Final Report--------------------------------------\n{'psf__requests-2931': {'contributing_functions': ['test_requests.py::test_put_with_binary_payload_repro'], 'test_before_patch': {'test_requests.py::test_put_with_binary_payload_repro': 'FAILED'}, 'test_after_patch': {'test_requests.py::test_put_with_binary_payload_repro': 'PASSED'}, 'total_changed': 4, 'total_missed': 1, 'cov_score': 0.75, 'final_score': 0.75, 'resolved': True}}\n---------------------------------------------------------------------------------\n\n\n\nAll instances run.\nCleaning cached images...\nRemoved 0 images.\nTotal instances: 1\nInstances submitted: 1\nInstances completed: 1\nInstances incomplete: 0\nInstances resolved: 1\nInstances unresolved: 0\nInstances with empty patches: 0\nInstances with errors: 0\nUnstopped containers: 0\nUnremoved images: 1\nFinal score: 0.75\nReport written to __home__selab__kcc-2026__outputs__smallbatch__20260610_101413__psf__requests-2931__predictions.json.debug-psf__requests-2931.json\n",
+  "harness_stderr": "<frozen runpy>:128: RuntimeWarning: 'tddbench.harness.run_evaluation' found in sys.modules after import of package 'tddbench.harness', but prior to execution of 'tddbench.harness.run_evaluation'; this may result in unpredictable behaviour\n\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|██████████| 1/1 [00:25<00:00, 25.50s/it]\n100%|██████████| 1/1 [00:25<00:00, 25.50s/it]\n"
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-10908",
+    "model_patch": "--- a/sklearn/feature_extraction/tests/test_text.py\n+++ b/sklearn/feature_extraction/tests/test_text.py\n@@ -1019,3 +1019,12 @@\n     if isinstance(vec, HashingVectorizer):\n         assert_raise_message(\n             ValueError, message, vec.transform, [\"good news everyone\"])\n+\n+def test_get_feature_names_without_fitting_repro():\n+    corpus = ['This is the first document.', 'This document is the second document.', 'And this is the third one.', 'Is this the first document?']\n+    vocabulary = ['and', 'document', 'first', 'is', 'one', 'second', 'the', 'third', 'this']\n+    vectorizer = CountVectorizer(vocabulary=vocabulary)\n+    feature_names = vectorizer.get_feature_names()\n+    assert_equal(feature_names, vocabulary)\n+    # [Tier 2: probe-verified buggy repr — must differ after fix]\n+    assert repr(feature_names) != \"NotFittedError: CountVectorizer - Vocabulary wasn't fitted.\"\n",
+    "patch_sha256": "5926e1f5c3c229aebd25c643ed8b1572133b22d2c663af5f0a318ee7bc7b8c30"
+  }
+]

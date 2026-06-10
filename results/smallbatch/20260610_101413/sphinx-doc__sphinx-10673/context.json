@@ -1,0 +1,592 @@
+{
+  "instance_id": "sphinx-doc__sphinx-10673",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "f35d2a6cc726f97d0e859ca7a0e1729f7da8a6c8",
+  "repo_path": "data/repos/sphinx-doc__sphinx",
+  "candidate_source_files": [
+    {
+      "path": "sphinx/environment/adapters/toctree.py",
+      "score": 17,
+      "matched_identifiers": [
+        "caption",
+        "contains",
+        "directive",
+        "like"
+      ],
+      "reasons": [
+        "stem_in_issue_text:toctree",
+        "source_content_tokens:like,caption,contains,directive,document"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {},
+      "top_level_functions": [
+        "TocTree.note",
+        "TocTree.resolve",
+        "TocTree.get_toctree_ancestors",
+        "TocTree.get_toc_for",
+        "TocTree.get_toctree_for"
+      ],
+      "localization_signals": [
+        "graph_neighbor",
+        "issue_text_content"
+      ],
+      "graph_neighbors": [
+        "sphinx/environment/adapters/toctree.py",
+        "sphinx/environment/collectors/toctree.py"
+      ]
+    },
+    {
+      "path": "sphinx/environment/collectors/toctree.py",
+      "score": 17,
+      "matched_identifiers": [
+        "caption",
+        "document",
+        "include",
+        "like"
+      ],
+      "reasons": [
+        "stem_in_issue_text:toctree",
+        "source_content_tokens:like,caption,document,include,links"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {},
+      "top_level_functions": [
+        "TocTreeCollector.clear_doc",
+        "TocTreeCollector.merge_other",
+        "TocTreeCollector.process_doc",
+        "TocTreeCollector.get_updated_docs",
+        "TocTreeCollector.assign_section_numbers",
+        "TocTreeCollector.assign_figure_numbers",
+        "setup"
+      ],
+      "localization_signals": [
+        "graph_neighbor",
+        "issue_text_content"
+      ],
+      "graph_neighbors": [
+        "sphinx/environment/adapters/toctree.py",
+        "sphinx/environment/collectors/toctree.py"
+      ]
+    },
+    {
+      "path": "sphinx/ext/autodoc/directive.py",
+      "score": 17,
+      "matched_identifiers": [
+        "directive",
+        "document",
+        "generated",
+        "like"
+      ],
+      "reasons": [
+        "stem_in_issue_text:directive",
+        "source_content_tokens:like,directive,document,generated,please"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {},
+      "top_level_functions": [
+        "DocumenterBridge.warn",
+        "DocumenterBridge.filename_set",
+        "process_documenter_options",
+        "parse_generated_content",
+        "AutodocDirective.run"
+      ],
+      "localization_signals": [
+        "graph_neighbor",
+        "issue_text_content"
+      ],
+      "graph_neighbors": [
+        "sphinx/ext/autodoc/directive.py"
+      ]
+    },
+    {
+      "path": "sphinx/ext/autosummary/generate.py",
+      "score": 17,
+      "matched_identifiers": [
+        "contains",
+        "directive",
+        "document",
+        "search"
+      ],
+      "reasons": [
+        "stem_in_issue_text:generate",
+        "source_content_tokens:search,contains,directive,document,errors"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {},
+      "top_level_functions": [
+        "DummyApplication.emit_firstresult",
+        "setup_documenters",
+        "AutosummaryRenderer.render",
+        "ModuleScanner.get_object_type",
+        "ModuleScanner.is_skipped",
+        "ModuleScanner.scan",
+        "members_of",
+        "generate_autosummary_content",
+        "generate_autosummary_docs",
+        "find_autosummary_in_files",
+        "find_autosummary_in_docstring",
+        "find_autosummary_in_lines",
+        "get_parser",
+        "main"
+      ],
+      "localization_signals": [
+        "issue_text_content"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "sphinx/writers/html.py",
+      "score": 17,
+      "matched_identifiers": [
+        "caption",
+        "document",
+        "following",
+        "like"
+      ],
+      "reasons": [
+        "stem_in_issue_text:html",
+        "source_content_tokens:like,caption,document,following,include"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": {},
+      "top_level_functions": [
+        "multiply_length",
+        "HTMLWriter.translate",
+        "HTMLTranslator.visit_start_of_file",
+        "HTMLTranslator.depart_start_of_file",
+        "HTMLTranslator.visit_desc",
+        "HTMLTranslator.depart_desc",
+        "HTMLTranslator.visit_desc_signature",
+        "HTMLTranslator.depart_desc_signature",
+        "HTMLTranslator.visit_desc_signature_line",
+        "HTMLTranslator.depart_desc_signature_line",
+        "HTMLTranslator.visit_desc_content",
+        "HTMLTranslator.depart_desc_content",
+        "HTMLTranslator.visit_desc_inline",
+        "HTMLTranslator.depart_desc_inline",
+        "HTMLTranslator.visit_desc_name",
+        "HTMLTranslator.depart_desc_name",
+        "HTMLTranslator.visit_desc_addname",
+        "HTMLTranslator.depart_desc_addname",
+        "HTMLTranslator.visit_desc_type",
+        "HTMLTranslator.depart_desc_type",
+        "HTMLTranslator.visit_desc_returns",
+        "HTMLTranslator.depart_desc_returns",
+        "HTMLTranslator.visit_desc_parameterlist",
+        "HTMLTranslator.depart_desc_parameterlist",
+        "HTMLTranslator.visit_desc_parameter",
+        "HTMLTranslator.depart_desc_parameter",
+        "HTMLTranslator.visit_desc_optional",
+        "HTMLTranslator.depart_desc_optional",
+        "HTMLTranslator.visit_desc_annotation",
+        "HTMLTranslator.depart_desc_annotation",
+        "HTMLTranslator.visit_versionmodified",
+        "HTMLTranslator.depart_versionmodified",
+        "HTMLTranslator.visit_reference",
+        "HTMLTranslator.visit_number_reference",
+        "HTMLTranslator.depart_number_reference",
+        "HTMLTranslator.visit_comment",
+        "HTMLTranslator.visit_admonition",
+        "HTMLTranslator.depart_admonition",
+        "HTMLTranslator.visit_seealso",
+        "HTMLTranslator.depart_seealso"
+      ],
+      "localization_signals": [
+        "issue_text_content"
+      ],
+      "graph_neighbors": null
+    }
+  ],
+  "candidate_test_files": [
+    {
+      "path": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "tests/roots/test-ext-inheritance_diagram/example/sphinx.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "tests/roots/test-ext-intersphinx-cppdomain/conf.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    },
+    {
+      "path": "tests/roots/test-ext-intersphinx-role/conf.py",
+      "score": 7,
+      "matched_identifiers": [],
+      "reasons": [
+        "same_module_area:sphinx",
+        "token_overlap:sphinx"
+      ],
+      "has_module_skip": false,
+      "collection_risk": "",
+      "code_snippets": null,
+      "top_level_functions": null,
+      "localization_signals": [
+        "test_style_match"
+      ],
+      "graph_neighbors": null
+    }
+  ],
+  "project_test_style": {
+    "framework": "unknown",
+    "evidence": [],
+    "assert_style": [
+      "unknown"
+    ],
+    "runner": "unknown"
+  },
+  "indexed_file_count": 555,
+  "indexed_test_file_count": 370,
+  "available_imports": {
+    "sphinx": [
+      "Any",
+      "BuildEnvironmentError",
+      "Callable",
+      "CatalogRepository",
+      "Config",
+      "Dict",
+      "DocumentError",
+      "Domain",
+      "DownloadFiles",
+      "EventManager",
+      "ExtensionError",
+      "FilenameUniqDict",
+      "Generator",
+      "Iterator",
+      "List",
+      "LoggingReporter",
+      "Node",
+      "Optional",
+      "PIPE",
+      "Project",
+      "RemovedInNextVersionWarning",
+      "RemovedInSphinx60Warning",
+      "Set",
+      "SphinxError",
+      "SphinxTransformer",
+      "TYPE_CHECKING",
+      "TocTree",
+      "Tuple",
+      "Union",
+      "__",
+      "addnodes",
+      "canon_path",
+      "copy",
+      "datetime",
+      "defaultdict",
+      "docname_to_domain",
+      "is_translatable",
+      "logging",
+      "nodes",
+      "os_path",
+      "path"
+    ],
+    "sphinx.environment": [
+      "BuildEnvironment",
+      "Dict",
+      "List",
+      "Optional",
+      "Set",
+      "TYPE_CHECKING",
+      "nodes"
+    ],
+    "sphinx.writers.html": [
+      "HTMLTranslator",
+      "HTMLWriter",
+      "multiply_length"
+    ],
+    "sphinx.environment.collectors.toctree": [
+      "TocTreeCollector",
+      "setup"
+    ],
+    "sphinx.environment.collectors": [
+      "EnvironmentCollector"
+    ],
+    "sphinx.environment.adapters.toctree": [
+      "TocTree"
+    ],
+    "sphinx.ext.autosummary.generate": [
+      "AutosummaryEntry",
+      "AutosummaryRenderer",
+      "DummyApplication",
+      "ModuleScanner",
+      "_underline",
+      "find_autosummary_in_docstring",
+      "find_autosummary_in_files",
+      "find_autosummary_in_lines",
+      "generate_autosummary_content",
+      "generate_autosummary_docs",
+      "get_parser",
+      "main",
+      "members_of",
+      "setup_documenters"
+    ],
+    "sphinx.ext.autosummary": [
+      "AutoLink",
+      "Autosummary",
+      "FakeApplication",
+      "FakeDirective",
+      "ImportExceptionGroup",
+      "_cleanup_signature",
+      "_import_by_name",
+      "autosummary_noop",
+      "autosummary_table",
+      "autosummary_table_visit_html",
+      "autosummary_toc",
+      "autosummary_toc_visit_html",
+      "extract_summary",
+      "get_documenter",
+      "get_import_prefixes_from_env",
+      "get_rst_suffix",
+      "import_by_name",
+      "import_ivar_by_name",
+      "limited_join",
+      "mangle_signature",
+      "process_generate_options",
+      "setup",
+      "strip_arg_typehint"
+    ],
+    "sphinx.ext": [
+      "Any",
+      "BuildEnvironment",
+      "Callable",
+      "Config",
+      "Dict",
+      "Documenter",
+      "DocumenterBridge",
+      "ENUM",
+      "Extension",
+      "HTMLTranslator",
+      "INSTANCEATTR",
+      "Iterator",
+      "List",
+      "Matcher",
+      "ModuleAnalyzer",
+      "ModuleType",
+      "Node",
+      "NullReporter",
+      "OptionSpec",
+      "Optional",
+      "Options",
+      "Parameter",
+      "Project",
+      "PycodeError",
+      "RSTStateMachine",
+      "RemovedInSphinx60Warning",
+      "RemovedInSphinx70Warning",
+      "Sequence",
+      "Set",
+      "Signature",
+      "Sphinx",
+      "SphinxComponentRegistry",
+      "SphinxDirective",
+      "SphinxRole",
+      "StringList",
+      "Struct",
+      "TYPE_CHECKING",
+      "Tuple",
+      "Type",
+      "TypeVar",
+      "Union",
+      "_",
+      "__",
+      "addnodes",
+      "cast",
+      "deprecated_alias",
+      "directives",
+      "evaluate_signature",
+      "get_class_members",
+      "get_object_members",
+      "get_type_hints",
+      "getdoc",
+      "import_module",
+      "import_object",
+      "inspect",
+      "ismock",
+      "logging",
+      "mock",
+      "new_document",
+      "nodes",
+      "object_description",
+      "path",
+      "prepare_docstring",
+      "restify",
+      "rst",
+      "safe_getattr",
+      "separate_metadata",
+      "signature_from_str",
+      "state_classes",
+      "stringify_signature",
+      "stringify_typehint",
+      "switch_source_input",
+      "system_message",
+      "undecorate"
+    ],
+    "sphinx.ext.autodoc": [
+      "AttributeDocumenter",
+      "ClassDocumenter",
+      "ClassLevelDocumenter",
+      "DataDocumenter",
+      "DataDocumenterMixinBase",
+      "DecoratorDocumenter",
+      "DocstringSignatureMixin",
+      "DocstringStripSignatureMixin",
+      "Documenter",
+      "ExceptionDocumenter",
+      "FunctionDocumenter",
+      "GenericAliasMixin",
+      "MethodDocumenter",
+      "ModuleDocumenter",
+      "ModuleLevelDocumenter",
+      "NewTypeAttributeDocumenter",
+      "NewTypeDataDocumenter",
+      "NewTypeMixin",
+      "NonDataDescriptorMixin",
+      "ObjectMember",
+      "Options",
+      "PropertyDocumenter",
+      "RuntimeInstanceAttributeMixin",
+      "SlotsMixin",
+      "TypeVarMixin",
+      "UninitializedGlobalVariableMixin",
+      "UninitializedInstanceAttributeMixin",
+      "_All",
+      "_Empty",
+      "annotation_option",
+      "autodoc_attrgetter",
+      "between",
+      "bool_option",
+      "class_doc_from_option",
+      "cut_lines",
+      "exclude_members_option",
+      "identity",
+      "inherited_members_option",
+      "member_order_option",
+      "members_option",
+      "merge_members_option",
+      "setup"
+    ],
+    "sphinx.ext.autodoc.directive": [
+      "AutodocDirective",
+      "DocumenterBridge",
+      "DummyOptionSpec",
+      "parse_generated_content",
+      "process_documenter_options"
+    ],
+    "tests.roots.test-ext-inheritance_diagram.example.sphinx": [
+      "DummyClass"
+    ]
+  },
+  "test_example_snippet": "",
+  "conftest_fixtures": {
+    "tests/conftest.py": [
+      "rootdir"
+    ]
+  },
+  "test_symbol_catalog": {
+    "tests/roots/test-domain-c-intersphinx/conf.py": {
+      "imports": [],
+      "imported_symbols": [],
+      "classes": [],
+      "models": [],
+      "helpers": [],
+      "collection_risk": []
+    },
+    "tests/roots/test-domain-cpp-intersphinx/conf.py": {
+      "imports": [],
+      "imported_symbols": [],
+      "classes": [],
+      "models": [],
+      "helpers": [],
+      "collection_risk": []
+    },
+    "tests/roots/test-ext-inheritance_diagram/example/sphinx.py": {
+      "imports": [],
+      "imported_symbols": [],
+      "classes": [
+        "DummyClass"
+      ],
+      "models": [],
+      "helpers": [],
+      "collection_risk": []
+    },
+    "tests/roots/test-ext-intersphinx-cppdomain/conf.py": {
+      "imports": [],
+      "imported_symbols": [],
+      "classes": [],
+      "models": [],
+      "helpers": [],
+      "collection_risk": []
+    },
+    "tests/roots/test-ext-intersphinx-role/conf.py": {
+      "imports": [],
+      "imported_symbols": [],
+      "classes": [],
+      "models": [],
+      "helpers": [],
+      "collection_risk": []
+    }
+  }
+}

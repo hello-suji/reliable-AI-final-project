@@ -1,0 +1,24 @@
+{
+  "instance_id": "sympy__sympy-20438",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/sympy__sympy-20438/predictions.json",
+  "run_id": "debug-sympy__sympy-20438",
+  "harness_command": [
+    "python",
+    "-m",
+    "tddbench.harness.run_evaluation",
+    "--dataset_name",
+    "TDD_Bench.json",
+    "--predictions_path",
+    "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/sympy__sympy-20438/predictions.json",
+    "--max_workers",
+    "1",
+    "--instance_ids",
+    "sympy__sympy-20438",
+    "--run_id",
+    "debug-sympy__sympy-20438"
+  ],
+  "harness_returncode": 0,
+  "harness_stdout": "Using gold patch predictions\nRunning 1 unevaluated instances...\nBase image sweb.base.x86_64:latest already exists, skipping build.\nBase images built successfully.\nNo environment images need to be built.\nFound 1 existing instance images. Will reuse them.\nRunning 1 instances...\n{'sympy/core/tests/test_basic.py': ['test_simplify_complement_issue_repro']}\n['sympy/core/tests/test_basic.py::test_simplify_complement_issue_repro']\nPointer 1\n[]\n[27, 28, 29, 59]\n[4]\n-------------------------------Before Patch-------------------------------\n{'sympy/core/tests/test_basic.py:test_simplify_complement_issue_repro': 'FAILED'}\n---------------------------------------------------------------------------------\n\n\n\nPointer 2\n[305, 309, 310, 563, 569, 570]\n[53]\n[4, 137, 138, 139]\n-------------------------------After Patch-------------------------------\n{'test_simplify_complement_issue_repro': 'PASSED'}\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Coverage-----------------------------------------\n1.0\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Final Report--------------------------------------\n{'sympy__sympy-20438': {'contributing_functions': ['sympy/core/tests/test_basic.py::test_simplify_complement_issue_repro'], 'test_before_patch': {'sympy/core/tests/test_basic.py:test_simplify_complement_issue_repro': 'FAILED'}, 'test_after_patch': {'test_simplify_complement_issue_repro': 'PASSED'}, 'total_changed': 16, 'total_missed': 0, 'cov_score': 1.0, 'final_score': 1, 'resolved': True}}\n---------------------------------------------------------------------------------\n\n\n\nAll instances run.\nCleaning cached images...\nRemoved 0 images.\nTotal instances: 1\nInstances submitted: 1\nInstances completed: 1\nInstances incomplete: 0\nInstances resolved: 1\nInstances unresolved: 0\nInstances with empty patches: 0\nInstances with errors: 0\nUnstopped containers: 0\nUnremoved images: 1\nFinal score: 1.0\nReport written to __home__selab__kcc-2026__outputs__smallbatch__20260610_101413__sympy__sympy-20438__predictions.json.debug-sympy__sympy-20438.json\n",
+  "harness_stderr": "<frozen runpy>:128: RuntimeWarning: 'tddbench.harness.run_evaluation' found in sys.modules after import of package 'tddbench.harness', but prior to execution of 'tddbench.harness.run_evaluation'; this may result in unpredictable behaviour\n\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|██████████| 1/1 [00:31<00:00, 31.01s/it]\n100%|██████████| 1/1 [00:31<00:00, 31.01s/it]\n"
+}

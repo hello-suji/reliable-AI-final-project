@@ -1,0 +1,25 @@
+default_backend: local
+
+models:
+  qwen:
+    provider: local
+    model_name: Qwen/Qwen2.5-Coder-32B-Instruct
+    base_url: http://localhost:8000/v1
+    api_key: local-key
+    temperature: 0.2
+    max_tokens: 1024
+    timeout: 180
+
+  codellama:
+    provider: local
+    model_name: codellama/CodeLlama-34b-Instruct-hf
+    base_url: http://localhost:8001/v1
+    api_key: local-key
+    temperature: 0.2
+    max_tokens: 1024
+
+  gpt4o:
+    provider: openai
+    model_name: gpt-4o
+    temperature: 0.2
+    max_tokens: 4096

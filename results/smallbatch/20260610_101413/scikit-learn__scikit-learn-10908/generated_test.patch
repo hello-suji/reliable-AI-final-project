@@ -1,0 +1,15 @@
+--- a/sklearn/feature_extraction/tests/test_text.py
++++ b/sklearn/feature_extraction/tests/test_text.py
+@@ -1019,3 +1019,12 @@
+     if isinstance(vec, HashingVectorizer):
+         assert_raise_message(
+             ValueError, message, vec.transform, ["good news everyone"])
++
++def test_get_feature_names_without_fitting_repro():
++    corpus = ['This is the first document.', 'This document is the second document.', 'And this is the third one.', 'Is this the first document?']
++    vocabulary = ['and', 'document', 'first', 'is', 'one', 'second', 'the', 'third', 'this']
++    vectorizer = CountVectorizer(vocabulary=vocabulary)
++    feature_names = vectorizer.get_feature_names()
++    assert_equal(feature_names, vocabulary)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(feature_names) != "NotFittedError: CountVectorizer - Vocabulary wasn't fitted."

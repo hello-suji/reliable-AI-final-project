@@ -1,0 +1,158 @@
+{
+  "iteration": 1,
+  "failure_type": "ALIGNED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.9688,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.875
+    },
+    "issue_alignment_score": 0.7667,
+    "coverage_score": 0.66,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [
+      "target_verified=False",
+      "oracle_type=last_resort_structural",
+      "oracle_source=inferred_semantic_target_unverified"
+    ],
+    "target_verified": false,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Gate warnings: target_verified=False, oracle_type=last_resort_structural, oracle_source=inferred_semantic_target_unverified",
+  "feedback": {
+    "failure_type": "ALIGNED",
+    "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Gate warnings: target_verified=False, oracle_type=last_resort_structural, oracle_source=inferred_semantic_target_unverified",
+    "oracle_additions": [],
+    "stimulus_additions": [],
+    "precondition_additions": [],
+    "expected_failure_override": "",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/__init__.py",
+      "target_function": "getcwd",
+      "related_classes": [
+        "PyCQA",
+        "Run"
+      ],
+      "candidate_test_file": "tests/lint/test_pylinter.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where getcwd can be called."
+    ],
+    "execution_stimulus": [
+      "Call getcwd with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue.",
+    "relevant_source_files": [
+      "pylint/__init__.py",
+      "pylint/checkers/__init__.py",
+      "pylint/extensions/__init__.py"
+    ],
+    "relevant_test_files": [
+      "tests/lint/test_pylinter.py",
+      "pylint/testutils/lint_module_test.py",
+      "tests/config/pylint_config/test_pylint_config_help.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "shell",
+        "code": "Run programmatically to repro this, using this code:\r\n\r\nimport sys\r\nimport runpy\r\n\r\nsys.path.insert(0, \"something\")\r\n\r\nrunpy.run_module('pylint', run_name=\"__main__\", alter_sys=True)"
+      },
+      {
+        "language": "shell",
+        "code": "When using pylint extension which bundles the libraries, the extension add them to sys.path depending on user settings. Pylint removes the first entry from sys path causing it to fail to load."
+      },
+      {
+        "language": "shell",
+        "code": "pylint 2.14.5"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "getcwd",
+        "insert",
+        "run_module"
+      ],
+      "classes": [
+        "PyCQA",
+        "Run"
+      ],
+      "files": [
+        "pylint/__init__.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": false,
+  "test_results": {
+    "tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro": "FAILED"
+  },
+  "coverage_summary": {
+    "pylint/__main__.py": {
+      "cover": 100.0,
+      "stmts": 3,
+      "miss": 0
+    },
+    "pylint/checkers/base/__init__.py": {
+      "cover": 100.0,
+      "stmts": 17,
+      "miss": 0
+    },
+    "pylint/checkers/base/name_checker/__init__.py": {
+      "cover": 100.0,
+      "stmts": 3,
+      "miss": 0
+    },
+    "pylint/checkers/classes/__init__.py": {
+      "cover": 100.0,
+      "stmts": 7,
+      "miss": 0
+    },
+    "pylint/checkers/refactoring/__init__.py": {
+      "cover": 100.0,
+      "stmts": 13,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

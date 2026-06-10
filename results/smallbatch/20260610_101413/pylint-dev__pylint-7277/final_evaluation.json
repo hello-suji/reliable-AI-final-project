@@ -1,0 +1,14 @@
+{
+  "instance_id": "pylint-dev__pylint-7277",
+  "final_score": 0.0,
+  "before_patch": {
+    "tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro": "FAILED"
+  },
+  "after_patch": {
+    "tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro": "FAILED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "ee97876c1df40426f8c9246039a4c152dcc8c1c28d313ff39bdd778f0065953a",
+  "resolved": false
+}

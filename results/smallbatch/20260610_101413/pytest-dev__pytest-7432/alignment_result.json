@@ -1,0 +1,119 @@
+{
+  "iteration": 5,
+  "failure_type": "NO_COVERAGE",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.9583,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.8333
+    },
+    "issue_alignment_score": 0.6667,
+    "coverage_score": 0.0,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": true,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "coverage_tool_no_data_no_line_evidence",
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 1,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "의심 위치 커버리지 없음 (coverage=0.00). 테스트가 타겟 소스 파일을 실행하지 않습니다.",
+  "feedback": {
+    "failure_type": "NO_COVERAGE",
+    "diagnosis": "의심 위치 커버리지 없음 (coverage=0.00). 테스트가 타겟 소스 파일을 실행하지 않습니다.",
+    "oracle_additions": [],
+    "stimulus_additions": [
+      "테스트는 src/_pytest/skipping.py 파일의 코드를 직접 실행해야 한다.",
+      "테스트는 pytest_runtest_makereport 함수를 직접 호출해야 한다.",
+      "이슈 원문 호출 패턴: import pytest\r\n@pytest.mark.skip\r\ndef test_skip_location() -> None:\r\n    assert 0",
+      "이슈 원문 호출 패턴: SKIPPED [1] test_it.py:3: unconditional skip"
+    ],
+    "precondition_additions": [],
+    "expected_failure_override": "",
+    "switch_scenario": true,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/_pytest/skipping.py",
+      "target_function": "pytest_runtest_makereport",
+      "related_classes": [],
+      "candidate_test_file": "doc/en/example/assertion/test_failures.py",
+      "confidence": "high"
+    },
+    "setup_steps": [
+      "Import pytest module",
+      "Define a test function with @pytest.mark.skip decorator"
+    ],
+    "execution_stimulus": [
+      "Run pytest with -rs and --runxfail options",
+      "[iteration-4 feedback] 현재 대상 테스트 파일에 module-level skip이 있어 테스트가 수집되지 않습니다. module-level skip이 없는 다른 테스트 파일을 선택해야 합니다.",
+      "[iteration-5 feedback] 테스트는 src/_pytest/skipping.py 파일의 코드를 직접 실행해야 한다.",
+      "[iteration-5 feedback] 테스트는 pytest_runtest_makereport 함수를 직접 호출해야 한다."
+    ],
+    "expected_failure": "The skip location reported points to src/_pytest/skipping.py instead of the test file",
+    "relevant_source_files": [
+      "src/_pytest/skipping.py",
+      "doc/en/conf.py",
+      "doc/en/example/assertion/failure_demo.py"
+    ],
+    "relevant_test_files": [
+      "doc/en/example/assertion/test_failures.py",
+      "doc/en/example/assertion/global_testmodule_config/conftest.py",
+      "doc/en/example/assertion/global_testmodule_config/test_hello_world.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import pytest\n\ndef test_skip_location():\n    pytest.skip('unconditional skip')\n\nif __name__ == '__main__':\n    pytest.main(['-rs', '--runxfail', 'test_skip_location'])"
+      }
+    ],
+    "expected_outputs": [
+      "SKIPPED [1] test_failures.py:3: unconditional skip"
+    ],
+    "actual_outputs": [
+      "SKIPPED [1] src/_pytest/skipping.py:238: unconditional skip"
+    ],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "pytest_runtest_makereport"
+      ],
+      "classes": []
+    },
+    "oracle_hints": [
+      "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value."
+    ],
+    "oracle": "Prefer a positive oracle from expected_outputs; assert the fixed behavior equals the stated correct value.",
+    "oracle_contract": {
+      "oracle_type": "positive_value",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the fixed value stated by the issue; do not invent a different expected value."
+    },
+    "oracle_type": "positive_value",
+    "oracle_source": "issue_expected"
+  },
+  "should_continue": true,
+  "test_results": {
+    "doc/en/example/assertion/test_failures.py::test_pytest_runtest_makereport_skipped_repro": "FAILED"
+  },
+  "coverage_summary": {},
+  "failure_type_detail": ""
+}

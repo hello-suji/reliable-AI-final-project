@@ -1,0 +1,123 @@
+{
+  "iteration": 1,
+  "failure_type": "ALIGNED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.9412,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.7647
+    },
+    "issue_alignment_score": 0.7614,
+    "coverage_score": 0.8333,
+    "oracle_confidence_score": 0.85,
+    "oracle_risk_flags": [
+      "buggy_output_as_oracle"
+    ],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [
+      "soft_oracle_risk_flags=buggy_output_as_oracle"
+    ],
+    "target_verified": true,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "success_path",
+    "oracle_source": "issue_expected",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Oracle risk: buggy_output_as_oracle Gate warnings: soft_oracle_risk_flags=buggy_output_as_oracle",
+  "feedback": {
+    "failure_type": "ALIGNED",
+    "diagnosis": "정합성 통과. 테스트가 버그 코드에서 실패하고, 이슈와 정합하며, 의심 위치를 커버합니다. Oracle risk: buggy_output_as_oracle Gate warnings: soft_oracle_risk_flags=buggy_output_as_oracle",
+    "oracle_additions": [
+      "버그 출력만 oracle로 쓰지 말고 수정 후 올바른 기대 출력/동작을 검증하라."
+    ],
+    "stimulus_additions": [],
+    "precondition_additions": [],
+    "expected_failure_override": "테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "sklearn/feature_extraction/text.py",
+      "target_function": "get_feature_names",
+      "related_classes": [
+        "CountVectorizer"
+      ],
+      "candidate_test_file": "sklearn/feature_extraction/tests/test_text.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "from sklearn.feature_extraction.text import CountVectorizer",
+      "corpus = ['This is the first document.', 'This document is the second document.', 'And this is the third one.', 'Is this the first document?']",
+      "vocabulary = ['and', 'document', 'first', 'is', 'one', 'second', 'the', 'third', 'this']",
+      "vectorizer = CountVectorizer(vocabulary=vocabulary)"
+    ],
+    "execution_stimulus": [
+      "vectorizer.get_feature_names()"
+    ],
+    "expected_failure": "The test should fail with a NotFittedError because the vectorizer's vocabulary is provided but the vectorizer has not been fitted. [iteration-1 feedback] 테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "relevant_source_files": [
+      "sklearn/feature_extraction/text.py",
+      "sklearn/feature_extraction/dict_vectorizer.py",
+      "sklearn/pipeline.py"
+    ],
+    "relevant_test_files": [
+      "sklearn/feature_extraction/tests/test_dict_vectorizer.py",
+      "sklearn/feature_extraction/tests/test_text.py",
+      "sklearn/tests/test_pipeline.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "def test_get_feature_names_without_fitting():\n    from sklearn.feature_extraction.text import CountVectorizer\n    corpus = ['This is the first document.', 'This document is the second document.', 'And this is the third one.', 'Is this the first document?']\n    vocabulary = ['and', 'document', 'first', 'is', 'one', 'second', 'the', 'third', 'this']\n    vectorizer = CountVectorizer(vocabulary=vocabulary)\n    try:\n        vectorizer.get_feature_names()\n        assert False, 'Expected NotFittedError'\n    except Exception as e:\n        assert str(e) == 'CountVectorizer - Vocabulary wasn't fitted.'"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [
+      "NotFittedError: CountVectorizer - Vocabulary wasn't fitted."
+    ],
+    "error_keywords": [
+      "NotFittedError"
+    ],
+    "identifiers": {
+      "functions": [
+        "get_feature_names"
+      ],
+      "classes": [
+        "CountVectorizer"
+      ]
+    },
+    "oracle_hints": [
+      "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort."
+    ],
+    "oracle": "Only buggy actual_outputs are known; derive a positive invariant from the issue if possible, and use != buggy value only as last resort. [iteration-1 feedback] 버그 출력만 oracle로 쓰지 말고 수정 후 올바른 기대 출력/동작을 검증하라.",
+    "oracle_contract": {
+      "oracle_type": "success_path",
+      "oracle_source": "issue_expected",
+      "rule": "Assert the call succeeds and check a post-call state/value; do not use pytest.raises."
+    },
+    "oracle_type": "success_path",
+    "oracle_source": "issue_expected"
+  },
+  "should_continue": false,
+  "test_results": {
+    "sklearn/feature_extraction/tests/test_text.py::test_get_feature_names_without_fitting_repro": "FAILED"
+  },
+  "coverage_summary": {},
+  "failure_type_detail": ""
+}

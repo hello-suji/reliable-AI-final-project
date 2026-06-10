@@ -1,0 +1,14 @@
+{
+  "instance_id": "sympy__sympy-11618",
+  "final_score": 1.0,
+  "before_patch": {
+    "sympy/geometry/tests/test_point.py:test_distance_ignores_third_dimension_repro": "FAILED"
+  },
+  "after_patch": {
+    "test_distance_ignores_third_dimension_repro": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "4731984fa10a6eb8abe0938c2b194591f584350dcddf1667bcca25db8e342abc",
+  "resolved": true
+}

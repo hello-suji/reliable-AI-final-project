@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "django__django-13786",
+    "model_patch": "--- a/tests/custom_migration_operations/operations.py\n+++ b/tests/custom_migration_operations/operations.py\n@@ -92,3 +92,15 @@\n             [self.arg],\n             {}\n         )\n+\n+from django.test import TestCase, SimpleTestCase\n+from django.db.migrations.operations.models import CreateModel, AlterModelOptions\n+from django.db.migrations.state import ProjectState\n+\n+class TestSquashMigrationsReduceClearsOptions(TestCase):\n+    def test_squashmigrations_reduce_clears_options_repro(self):\n+        initial_state = ProjectState()\n+        create_model_op = CreateModel('test_model', fields=[], options={'verbose_name': 'Initial Name'})\n+        alter_options_op = AlterModelOptions('test_model', options={})\n+        new_ops = create_model_op.reduce(alter_options_op, 'app_label')\n+        self.assertEqual(new_ops[0].options, {})\n",
+    "patch_sha256": "d94fd01f736a66269bad879ed6321ad70df5d9ecb290301729a3cdd94304a157"
+  }
+]

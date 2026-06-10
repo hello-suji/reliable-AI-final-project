@@ -1,0 +1,14 @@
+--- a/testing/test_pytester.py
++++ b/testing/test_pytester.py
+@@ -848,3 +848,11 @@
+     result.assert_outcomes(passed=1, deselected=1)
+     # If deselected is not passed, it is not checked at all.
+     result.assert_outcomes(passed=1)
++
++import logging
++
++def test_caplog_get_records_after_clear_repro(caplog):
++    logging.warning('first')
++    caplog.clear()
++    logging.warning('second')
++    assert caplog.get_records('warning') == [caplog.records[-1]]

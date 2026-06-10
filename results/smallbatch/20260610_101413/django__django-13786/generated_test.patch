@@ -1,0 +1,18 @@
+--- a/tests/custom_migration_operations/operations.py
++++ b/tests/custom_migration_operations/operations.py
+@@ -92,3 +92,15 @@
+             [self.arg],
+             {}
+         )
++
++from django.test import TestCase, SimpleTestCase
++from django.db.migrations.operations.models import CreateModel, AlterModelOptions
++from django.db.migrations.state import ProjectState
++
++class TestSquashMigrationsReduceClearsOptions(TestCase):
++    def test_squashmigrations_reduce_clears_options_repro(self):
++        initial_state = ProjectState()
++        create_model_op = CreateModel('test_model', fields=[], options={'verbose_name': 'Initial Name'})
++        alter_options_op = AlterModelOptions('test_model', options={})
++        new_ops = create_model_op.reduce(alter_options_op, 'app_label')
++        self.assertEqual(new_ops[0].options, {})

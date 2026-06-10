@@ -1,0 +1,15 @@
+{
+  "instance_id": "django__django-13786",
+  "final_score": 1.0,
+  "before_patch": {
+    "test_squashmigrations_reduce_clears_options_repro (custom_migration_operations.operations.TestSquashMigrationsReduceClearsOptions)": "FAILED",
+    "test_squashmigrations_reduce_clears_options_repro": "FAILED"
+  },
+  "after_patch": {
+    "test_squashmigrations_reduce_clears_options_repro (custom_migration_operations.operations.TestSquashMigrationsReduceClearsOptions)": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "d94fd01f736a66269bad879ed6321ad70df5d9ecb290301729a3cdd94304a157",
+  "resolved": true
+}

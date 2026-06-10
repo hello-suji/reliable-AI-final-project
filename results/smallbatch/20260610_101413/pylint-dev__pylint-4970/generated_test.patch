@@ -1,0 +1,14 @@
+--- a/tests/checkers/unittest_similar.py
++++ b/tests/checkers/unittest_similar.py
+@@ -502,3 +502,11 @@
+         # There doesn't seem to be a faster way of doing this, yet.
+         lines = (linespec.text for linespec in lineset_obj.stripped_lines)
+         assert tuple(expected_lines) == tuple(lines)
++
++def test_min_similarity_lines_zero_disables_check_repro() -> None:
++    output = StringIO()
++    linter = PyLinter(reporter=Reporter())
++    linter.config.min_similarity_lines = 0
++    with redirect_stdout(output):
++        similar.Run(['--disable=all', '--enable=similarities', 'tests/input/min_similarity_lines_zero.py'])
++    assert 'duplicate-code' not in output.getvalue()

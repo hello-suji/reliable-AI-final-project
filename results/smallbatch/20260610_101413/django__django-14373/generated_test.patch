@@ -1,0 +1,17 @@
+--- a/tests/utils_tests/test_dateformat.py
++++ b/tests/utils_tests/test_dateformat.py
+@@ -194,3 +194,14 @@
+                     dateformat.format(datetime(2000, 1, 1, hour), 'g'),
+                     expected,
+                 )
++
++from django.test import TestCase, SimpleTestCase
++class TestDateFormatYearSpecifier(SimpleTestCase):
++    def test_Y_specifier_for_year_less_than_1000_repro(self):
++        from django.utils.dateformat import DateFormat
++        from datetime import date
++        df = DateFormat(date(999, 1, 1))
++        result = df.format('Y')
++        self.assertEqual(result, '0999')
++        # [Tier 2: probe-verified buggy repr — must differ after fix]
++        assert repr(result) != '999'

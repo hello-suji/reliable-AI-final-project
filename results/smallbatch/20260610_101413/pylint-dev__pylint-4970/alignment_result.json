@@ -1,0 +1,133 @@
+{
+  "iteration": 5,
+  "failure_type": "NO_COVERAGE",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 1.0,
+    "bug_fail_features": {
+      "f_fail": 1.0,
+      "f_assert": 1.0,
+      "f_symptom": 1.0
+    },
+    "issue_alignment_score": 1.0,
+    "coverage_score": 0.28,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": false,
+    "strong_issue_evidence": false,
+    "coverage_fallback_reason": "",
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "의심 위치 커버리지 없음 (coverage=0.28). 테스트가 타겟 소스 파일을 실행하지 않습니다.",
+  "feedback": {
+    "failure_type": "NO_COVERAGE",
+    "diagnosis": "의심 위치 커버리지 없음 (coverage=0.28). 테스트가 타겟 소스 파일을 실행하지 않습니다.",
+    "oracle_additions": [],
+    "stimulus_additions": [
+      "테스트는 pylint/checkers/similar.py 파일의 코드를 직접 실행해야 한다."
+    ],
+    "precondition_additions": [],
+    "expected_failure_override": "",
+    "switch_scenario": true,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "pylint/checkers/similar.py",
+      "target_function": "",
+      "related_classes": [],
+      "candidate_test_file": "tests/checkers/unittest_similar.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "[iteration-4 feedback] 테스트는 pylint/checkers/similar.py 파일의 코드를 직접 실행해야 한다.",
+      "[iteration-5 feedback] 테스트는 pylint/checkers/similar.py 파일의 코드를 직접 실행해야 한다."
+    ],
+    "expected_failure": "Setting `min-similarity-lines` to `0` in the rcfile doesn't disable checking for duplicate code, it instead treats every line of code as duplicate and raises many errors.",
+    "relevant_source_files": [
+      "pylint/checkers/similar.py",
+      "pylint/checkers/base.py",
+      "pylint/checkers/classes.py"
+    ],
+    "relevant_test_files": [
+      "tests/checkers/unittest_similar.py",
+      "tests/checkers/unittest_base.py",
+      "tests/checkers/unittest_classes.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": true,
+  "test_results": {
+    "tests/checkers/unittest_similar.py::test_min_similarity_lines_zero_disables_check_repro": "FAILED"
+  },
+  "coverage_summary": {
+    "pylint/checkers/mapreduce_checker.py": {
+      "cover": 100.0,
+      "stmts": 7,
+      "miss": 0
+    },
+    "pylint/checkers/refactoring/__init__.py": {
+      "cover": 100.0,
+      "stmts": 11,
+      "miss": 0
+    },
+    "pylint/constants.py": {
+      "cover": 100.0,
+      "stmts": 22,
+      "miss": 0
+    },
+    "pylint/exceptions.py": {
+      "cover": 100.0,
+      "stmts": 7,
+      "miss": 0
+    },
+    "pylint/extensions/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

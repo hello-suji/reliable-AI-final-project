@@ -1,0 +1,23 @@
+--- a/sklearn/compose/tests/test_column_transformer.py
++++ b/sklearn/compose/tests/test_column_transformer.py
+@@ -1031,3 +1031,20 @@
+     tf_1 = ColumnTransformer([('ohe', ohe, [-1])], remainder='passthrough')
+     tf_2 = ColumnTransformer([('ohe', ohe,  [2])], remainder='passthrough')
+     assert_array_equal(tf_1.fit_transform(X), tf_2.fit_transform(X))
++
++import numpy as np
++from sklearn.preprocessing import KBinsDiscretizer
++
++
++def test_kbinsdiscretizer_kmeans_strategy_repro():
++    X = np.array([0, 0.5, 2, 3, 9, 10]).reshape(-1, 1)
++
++    # with 5 bins
++    est = KBinsDiscretizer(n_bins=5, strategy='kmeans', encode='ordinal')
++    Xt = est.fit_transform(X)
++
++    # Assert that the transformation does not raise ValueError and produces a valid output
++    assert Xt.shape == (X.shape[0], 1)
++    assert np.all(Xt >= 0) and np.all(Xt < 5)
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(Xt) != 'ValueError: bins must be monotonically increasing or decreasing'

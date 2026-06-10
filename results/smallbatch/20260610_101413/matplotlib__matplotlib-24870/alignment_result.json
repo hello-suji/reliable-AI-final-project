@@ -1,0 +1,159 @@
+{
+  "iteration": 5,
+  "failure_type": "NOT_FAILED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.4286,
+    "bug_fail_features": {
+      "f_fail": 0.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.7143
+    },
+    "issue_alignment_score": 0.7222,
+    "coverage_score": 0.41,
+    "oracle_confidence_score": 0.7,
+    "oracle_risk_flags": [
+      "structural_oracle_only",
+      "weak_structural_oracle"
+    ],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": false,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 4,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "버그 코드에서 테스트가 FAIL하지 않음 (bug_fail=0.4). assertion이 버그 동작 대신 정상 동작을 확인하고 있을 수 있습니다. 복합 게이트 미달: s_b=0.429<τ_b=0.700; s_c=0.410<τ_c=0.600 Oracle risk: structural_oracle_only, weak_structural_oracle",
+  "feedback": {
+    "failure_type": "NOT_FAILED",
+    "diagnosis": "버그 코드에서 테스트가 FAIL하지 않음 (bug_fail=0.4). assertion이 버그 동작 대신 정상 동작을 확인하고 있을 수 있습니다. 복합 게이트 미달: s_b=0.429<τ_b=0.700; s_c=0.410<τ_c=0.600 Oracle risk: structural_oracle_only, weak_structural_oracle",
+    "oracle_additions": [
+      "현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert len(cs.collections) > 0, \"Contour plot should have collections\"",
+      "위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+      "assertion은 버그 수정 후의 올바른 결과를 기대해야 한다.",
+      "구조적 assertion만 사용하지 말고 이슈의 올바른 값/동작을 직접 검증하라.",
+      "`assertIsInstance`/`assertIsNotNone`/length 같은 구조적 oracle은 post-fix 동작을 충분히 특정하지 못한다. issue-specific value 또는 state change를 검증하라."
+    ],
+    "stimulus_additions": [
+      "복합 미달 보강: 테스트가 lib/matplotlib/pyplot.py 경로를 실제로 지나가도록 입력/setup을 바꿔라.",
+      "복합 미달 보강: clearly를 직접 호출하거나 public caller를 통해 반드시 실행되게 하라."
+    ],
+    "precondition_additions": [],
+    "expected_failure_override": "패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다. 현재 테스트는 before-patch에서 충분히 실패하지 않는다. 버그 입력을 직접 실행하고 fix 후 기대 동작을 assert하라. 테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/pyplot.py",
+      "target_function": "clearly",
+      "related_classes": [],
+      "candidate_test_file": "lib/matplotlib/tests/test_contour.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where clearly can be called."
+    ],
+    "execution_stimulus": [
+      "Call clearly with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "[iteration-4 feedback] 복합 미달 보강: 테스트가 lib/matplotlib/pyplot.py 경로를 실제로 지나가도록 입력/setup을 바꿔라.",
+      "[iteration-4 feedback] 복합 미달 보강: clearly를 직접 호출하거나 public caller를 통해 반드시 실행되게 하라.",
+      "[iteration-5 feedback] 복합 미달 보강: 테스트가 lib/matplotlib/pyplot.py 경로를 실제로 지나가도록 입력/setup을 바꿔라.",
+      "[iteration-5 feedback] 복합 미달 보강: clearly를 직접 호출하거나 public caller를 통해 반드시 실행되게 하라."
+    ],
+    "expected_failure": "The assertion should fail due to the bug described in the issue. [iteration-5 feedback] 패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다. 현재 테스트는 before-patch에서 충분히 실패하지 않는다. 버그 입력을 직접 실행하고 fix 후 기대 동작을 assert하라. 테스트는 pre-patch에서 FAIL하고 post-patch에서 PASS하는 positive oracle을 사용해야 한다.",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/axes/_axes.py",
+      "lib/mpl_toolkits/mplot3d/axes3d.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_contour.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/test_subplots.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "plt.contour(boolean_2d_array, levels=[.5], ...)"
+      },
+      {
+        "language": "python",
+        "code": "from pylab import *\r\nii, jj = np.ogrid[:100, :100]; im = (ii+jj) % 20 < 10; subplot(121).contour(im); subplot(122).contour(im, levels=[.5])"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "clearly",
+        "contour",
+        "subplot"
+      ],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. [iteration-5 feedback] 현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert len(cs.collections) > 0, \"Contour plot should have collections\" 위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": true,
+  "test_results": {
+    "lib/matplotlib/tests/test_contour.py::test_contour_with_boolean_array_repro": "PASSED"
+  },
+  "coverage_summary": {
+    "lib/matplotlib/_cm_listed.py": {
+      "cover": 100.0,
+      "stmts": 11,
+      "miss": 0
+    },
+    "lib/matplotlib/_color_data.py": {
+      "cover": 100.0,
+      "stmts": 5,
+      "miss": 0
+    },
+    "lib/matplotlib/_mathtext_data.py": {
+      "cover": 100.0,
+      "stmts": 6,
+      "miss": 0
+    },
+    "lib/matplotlib/_version.py": {
+      "cover": 100.0,
+      "stmts": 11,
+      "miss": 0
+    },
+    "lib/matplotlib/backends/__init__.py": {
+      "cover": 100.0,
+      "stmts": 1,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

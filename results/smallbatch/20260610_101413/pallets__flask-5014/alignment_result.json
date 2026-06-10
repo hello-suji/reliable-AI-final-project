@@ -1,0 +1,142 @@
+{
+  "iteration": 5,
+  "failure_type": "NOT_FAILED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.5,
+    "bug_fail_features": {
+      "f_fail": 0.0,
+      "f_assert": 1.0,
+      "f_symptom": 1.0
+    },
+    "issue_alignment_score": 0.0,
+    "coverage_score": 0.21,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": false,
+    "strong_issue_evidence": false,
+    "coverage_fallback_reason": "",
+    "oracle_type": "last_resort_structural",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 1,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "버그 코드에서 테스트가 FAIL하지 않음 (bug_fail=0.5). assertion이 버그 동작 대신 정상 동작을 확인하고 있을 수 있습니다. 복합 게이트 미달: s_b=0.500<τ_b=0.700; s_c=0.210<τ_c=0.600; s_a=0.000<τ_a=0.650",
+  "feedback": {
+    "failure_type": "NOT_FAILED",
+    "diagnosis": "버그 코드에서 테스트가 FAIL하지 않음 (bug_fail=0.5). assertion이 버그 동작 대신 정상 동작을 확인하고 있을 수 있습니다. 복합 게이트 미달: s_b=0.500<τ_b=0.700; s_c=0.210<τ_c=0.600; s_a=0.000<τ_a=0.650",
+    "oracle_additions": [
+      "현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert blueprint.name == 'valid_name'",
+      "위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+      "assertion은 버그 수정 후의 올바른 결과를 기대해야 한다.",
+      "복합 미달 보강: 이슈의 입력, 기대 동작, 핵심 식별자를 같은 테스트 흐름 안에서 검증하라."
+    ],
+    "stimulus_additions": [
+      "복합 미달 보강: 테스트가 src/flask/app.py 경로를 실제로 지나가도록 입력/setup을 바꿔라."
+    ],
+    "precondition_additions": [],
+    "expected_failure_override": "패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다. 현재 테스트는 before-patch에서 충분히 실패하지 않는다. 버그 입력을 직접 실행하고 fix 후 기대 동작을 assert하라.",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "src/flask/app.py",
+      "target_function": "",
+      "related_classes": [],
+      "candidate_test_file": "tests/test_helpers.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: mixed).",
+      "Reproduce the input conditions described in the issue."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value.",
+      "[iteration-4 feedback] 복합 미달 보강: 테스트가 src/flask/app.py 경로를 실제로 지나가도록 입력/setup을 바꿔라.",
+      "[iteration-5 feedback] 복합 미달 보강: 테스트가 src/flask/app.py 경로를 실제로 지나가도록 입력/setup을 바꿔라."
+    ],
+    "expected_failure": "It would be helpful if a `ValueError` was raised when trying to do that. [iteration-5 feedback] 패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다. 현재 테스트는 before-patch에서 충분히 실패하지 않는다. 버그 입력을 직접 실행하고 fix 후 기대 동작을 assert하라.",
+    "relevant_source_files": [
+      "src/flask/app.py",
+      "src/flask/helpers.py",
+      "src/flask/scaffold.py"
+    ],
+    "relevant_test_files": [
+      "tests/test_cli.py",
+      "tests/test_helpers.py",
+      "tests/test_apps/cliapp/app.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [
+      "ValueError"
+    ],
+    "identifiers": {
+      "functions": [],
+      "classes": [],
+      "files": [],
+      "exceptions": [
+        "ValueError"
+      ]
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. [iteration-5 feedback] 현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert blueprint.name == 'valid_name' 위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+    "oracle_contract": {
+      "oracle_type": "last_resort_structural",
+      "oracle_source": "inferred_semantic",
+      "rule": "Structural assertions are last resort and should not be accepted as final ALIGNED unless strengthened."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": true,
+  "test_results": {
+    "tests/test_helpers.py::test_blueprint_valid_name_does_not_raise_value_error_repro": "PASSED"
+  },
+  "coverage_summary": {
+    "src/flask/typing.py": {
+      "cover": 100.0,
+      "stmts": 20,
+      "miss": 0
+    },
+    "src/flask/signals.py": {
+      "cover": 91.0,
+      "stmts": 32,
+      "miss": 3
+    },
+    "src/flask/__init__.py": {
+      "cover": 72.0,
+      "stmts": 63,
+      "miss": 16
+    },
+    "src/flask/globals.py": {
+      "cover": 71.0,
+      "stmts": 34,
+      "miss": 9
+    },
+    "src/flask/json/tag.py": {
+      "cover": 64.0,
+      "stmts": 127,
+      "miss": 42
+    }
+  },
+  "failure_type_detail": ""
+}

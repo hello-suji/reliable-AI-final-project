@@ -1,0 +1,154 @@
+{
+  "iteration": 5,
+  "failure_type": "NOT_FAILED",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.4688,
+    "bug_fail_features": {
+      "f_fail": 0.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.875
+    },
+    "issue_alignment_score": 0.6667,
+    "coverage_score": 0.5,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": false,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "버그 코드에서 테스트가 FAIL하지 않음 (bug_fail=0.5). assertion이 버그 동작 대신 정상 동작을 확인하고 있을 수 있습니다. 복합 게이트 미달: s_b=0.469<τ_b=0.700; s_c=0.500<τ_c=0.600",
+  "feedback": {
+    "failure_type": "NOT_FAILED",
+    "diagnosis": "버그 코드에서 테스트가 FAIL하지 않음 (bug_fail=0.5). assertion이 버그 동작 대신 정상 동작을 확인하고 있을 수 있습니다. 복합 게이트 미달: s_b=0.469<τ_b=0.700; s_c=0.500<τ_c=0.600",
+    "oracle_additions": [
+      "현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert ax_test.get_xlim() == ax_ref.get_xlim()",
+      "위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+      "assertion은 버그 수정 후의 올바른 결과를 기대해야 한다."
+    ],
+    "stimulus_additions": [
+      "복합 미달 보강: 테스트가 lib/matplotlib/pyplot.py 경로를 실제로 지나가도록 입력/setup을 바꿔라.",
+      "복합 미달 보강: plot를 직접 호출하거나 public caller를 통해 반드시 실행되게 하라."
+    ],
+    "precondition_additions": [],
+    "expected_failure_override": "패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다. 현재 테스트는 before-patch에서 충분히 실패하지 않는다. 버그 입력을 직접 실행하고 fix 후 기대 동작을 assert하라.",
+    "switch_scenario": false,
+    "candidate_test_file_override": ""
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "lib/matplotlib/pyplot.py",
+      "target_function": "plot",
+      "related_classes": [
+        "SpanSelector"
+      ],
+      "candidate_test_file": "lib/matplotlib/tests/test_figure.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: pytest).",
+      "Set up an environment where plot can be called."
+    ],
+    "execution_stimulus": [
+      "Call plot with the reproduction conditions from the issue.",
+      "Compare the result with the expected value.",
+      "[iteration-4 feedback] 테스트는 lib/matplotlib/pyplot.py 파일의 코드를 직접 실행해야 한다.",
+      "[iteration-4 feedback] 테스트는 plot 함수를 직접 호출해야 한다.",
+      "[iteration-5 feedback] 복합 미달 보강: 테스트가 lib/matplotlib/pyplot.py 경로를 실제로 지나가도록 입력/setup을 바꿔라.",
+      "[iteration-5 feedback] 복합 미달 보강: plot를 직접 호출하거나 public caller를 통해 반드시 실행되게 하라."
+    ],
+    "expected_failure": "**Actual outcome** [iteration-5 feedback] 패치 적용 전(pre-patch) 코드에서 반드시 테스트가 FAILED 되어야 한다. assertion은 수정된(올바른) 동작을 기대해야 한다. 현재 테스트는 before-patch에서 충분히 실패하지 않는다. 버그 입력을 직접 실행하고 fix 후 기대 동작을 assert하라.",
+    "relevant_source_files": [
+      "lib/matplotlib/pyplot.py",
+      "lib/matplotlib/figure.py",
+      "lib/matplotlib/axes/_axes.py"
+    ],
+    "relevant_test_files": [
+      "lib/matplotlib/tests/test_figure.py",
+      "lib/matplotlib/tests/test_pyplot.py",
+      "lib/matplotlib/tests/test_subplots.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "pytest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "from matplotlib import pyplot as plt\r\nfrom matplotlib.widgets import SpanSelector\r\n\r\nfig, ax = plt.subplots()\r\nax.plot([10, 20], [10, 20])\r\nss = SpanSelector(ax, print, \"horizontal\", interactive=True)\r\nplt.show()"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "plot",
+        "show",
+        "subplots"
+      ],
+      "classes": [
+        "SpanSelector"
+      ],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality. [iteration-5 feedback] 현재 테스트의 assertion (버그 코드에서도 통과하고 있음):\n  assert ax_test.get_xlim() == ax_ref.get_xlim() 위 assertion이 버그 코드에서도 PASS하는 이유: 버그가 발생하는 값이 아닌 다른 값을 기대하거나, 버그와 무관한 동작을 검증하고 있을 가능성이 높다.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": true,
+  "test_results": {
+    "lib/matplotlib/tests/test_figure.py::test_spanselector_limits_repro[png]": "PASSED"
+  },
+  "coverage_summary": {
+    "lib/matplotlib/_cm_listed.py": {
+      "cover": 100.0,
+      "stmts": 11,
+      "miss": 0
+    },
+    "lib/matplotlib/_color_data.py": {
+      "cover": 100.0,
+      "stmts": 5,
+      "miss": 0
+    },
+    "lib/matplotlib/_mathtext_data.py": {
+      "cover": 100.0,
+      "stmts": 7,
+      "miss": 0
+    },
+    "lib/matplotlib/axes/__init__.py": {
+      "cover": 100.0,
+      "stmts": 2,
+      "miss": 0
+    },
+    "lib/matplotlib/backends/__init__.py": {
+      "cover": 100.0,
+      "stmts": 0,
+      "miss": 0
+    }
+  },
+  "failure_type_detail": ""
+}

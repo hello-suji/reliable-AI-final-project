@@ -1,0 +1,24 @@
+{
+  "instance_id": "pylint-dev__pylint-7277",
+  "benchmark_root": "/home/selab/kcc-2026/benchmark/TDD-Bench-Verified",
+  "predictions_path": "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/pylint-dev__pylint-7277/predictions.json",
+  "run_id": "debug-pylint-dev__pylint-7277",
+  "harness_command": [
+    "python",
+    "-m",
+    "tddbench.harness.run_evaluation",
+    "--dataset_name",
+    "TDD_Bench.json",
+    "--predictions_path",
+    "/home/selab/kcc-2026/outputs/smallbatch/20260610_101413/pylint-dev__pylint-7277/predictions.json",
+    "--max_workers",
+    "1",
+    "--instance_ids",
+    "pylint-dev__pylint-7277",
+    "--run_id",
+    "debug-pylint-dev__pylint-7277"
+  ],
+  "harness_returncode": 0,
+  "harness_stdout": "Using gold patch predictions\nRunning 1 unevaluated instances...\nBase image sweb.base.x86_64:latest already exists, skipping build.\nBase images built successfully.\nNo environment images need to be built.\nFound 1 existing instance images. Will reuse them.\nRunning 1 instances...\n{'tests/lint/test_pylinter.py': ['test_pylint_removes_first_item_from_sys_path_repro']}\n['tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro']\nPointer 1\n[99, 100]\n-------------------------------Before Patch-------------------------------\n{'tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro': 'FAILED'}\n---------------------------------------------------------------------------------\n\n\n\nPointer 2\n[100, 101, 102]\n-------------------------------After Patch-------------------------------\n{'tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro': 'FAILED'}\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Coverage-----------------------------------------\n0.8\n--------------------------------------------------------------------------------\n\n\n\n-------------------------------Final Report--------------------------------------\n{'pylint-dev__pylint-7277': {'contributing_functions': ['tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro'], 'test_before_patch': {'tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro': 'FAILED'}, 'test_after_patch': {'tests/lint/test_pylinter.py::test_pylint_removes_first_item_from_sys_path_repro': 'FAILED'}, 'total_changed': 5, 'total_missed': 1, 'cov_score': 0.8, 'final_score': 0.0, 'resolved': False}}\n---------------------------------------------------------------------------------\n\n\n\nAll instances run.\nCleaning cached images...\nRemoved 0 images.\nTotal instances: 1\nInstances submitted: 1\nInstances completed: 1\nInstances incomplete: 0\nInstances resolved: 0\nInstances unresolved: 1\nInstances with empty patches: 0\nInstances with errors: 0\nUnstopped containers: 0\nUnremoved images: 1\nFinal score: 0.0\nReport written to __home__selab__kcc-2026__outputs__smallbatch__20260610_101413__pylint-dev__pylint-7277__predictions.json.debug-pylint-dev__pylint-7277.json\n",
+  "harness_stderr": "<frozen runpy>:128: RuntimeWarning: 'tddbench.harness.run_evaluation' found in sys.modules after import of package 'tddbench.harness', but prior to execution of 'tddbench.harness.run_evaluation'; this may result in unpredictable behaviour\n\n  0%|          | 0/1 [00:00<?, ?it/s]\n100%|██████████| 1/1 [00:41<00:00, 41.11s/it]\n100%|██████████| 1/1 [00:41<00:00, 41.11s/it]\n"
+}

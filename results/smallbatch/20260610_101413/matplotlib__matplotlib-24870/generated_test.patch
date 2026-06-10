@@ -1,0 +1,16 @@
+--- a/lib/matplotlib/tests/test_contour.py
++++ b/lib/matplotlib/tests/test_contour.py
+@@ -693,3 +693,13 @@
+     assert ax.get_children() != orig_children
+     cs.remove()
+     assert ax.get_children() == orig_children
++
++import numpy as np
++import matplotlib.pyplot as plt
++
++def test_contour_with_boolean_array_repro():
++    ii, jj = np.ogrid[:100, :100]
++    im = (ii + jj) % 20 < 10
++    fig, ax = plt.subplots()
++    cs = ax.contour(im)
++    assert len(cs.collections) > 0, "Contour plot should have collections"

@@ -1,0 +1,15 @@
+{
+  "instance_id": "django__django-14373",
+  "final_score": 1.0,
+  "before_patch": {
+    "test_Y_specifier_for_year_less_than_1000_repro (utils_tests.test_dateformat.TestDateFormatYearSpecifier)": "FAILED",
+    "test_Y_specifier_for_year_less_than_1000_repro": "FAILED"
+  },
+  "after_patch": {
+    "test_Y_specifier_for_year_less_than_1000_repro (utils_tests.test_dateformat.TestDateFormatYearSpecifier)": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "20b4bd18671fe7d93b6769fe58432035460ba1d2ea7460123ab20d24e4200c0b",
+  "resolved": true
+}

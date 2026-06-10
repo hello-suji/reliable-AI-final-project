@@ -1,0 +1,18 @@
+--- a/test_requests.py
++++ b/test_requests.py
+@@ -912,3 +912,15 @@
+ 
+ if __name__ == '__main__':
+     unittest.main()
++
++def test_digest_auth_qop_options_quoted_repro():
++    from requests.auth import HTTPDigestAuth
++    from requests.models import Request
++    from requests.sessions import Session
++
++    session = Session()
++    request = Request('GET', 'http://example.com/digest-auth')
++    prepared_request = session.prepare_request(request)
++    auth = HTTPDigestAuth('user', 'passwd')
++    auth.handle_401(prepared_request, {'www-authenticate': 'Digest realm="example", nonce="abcdef", qop="auth"'})
++    assert 'qop=auth' in prepared_request.headers['Authorization']

@@ -1,0 +1,11 @@
+--- a/tests/test_helpers.py
++++ b/tests/test_helpers.py
+@@ -340,3 +340,8 @@
+ 
+         with pytest.raises(ValueError):
+             app.open_resource("static/index.html", mode)
++
++def test_blueprint_valid_name_does_not_raise_value_error_repro():
++    from flask import Blueprint
++    blueprint = Blueprint(name='valid_name', import_name=__name__)
++    assert blueprint.name == 'valid_name'

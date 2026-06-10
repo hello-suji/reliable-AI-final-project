@@ -1,0 +1,21 @@
+--- a/astropy/io/fits/tests/test_table.py
++++ b/astropy/io/fits/tests/test_table.py
+@@ -3922,3 +3922,18 @@
+ 
+     with pytest.warns(UnitsWarning):
+         Table.read(path, unit_parse_strict="warn")
++
++def test_fitsdiff_identical_files_repro():
++    """
++    Regression test for https://github.com/astropy/astropy/issues/14539
++
++    Ensure that FITSDiff reports no differences when comparing a file to itself.
++    """
++    from astropy.io import fits
++
++    col = fits.Column(name='a', format='QD', array=[[0], [0, 0]])
++    hdu = fits.BinTableHDU.from_columns([col])
++    hdu.writeto('diffbug.fits', overwrite=True)
++
++    diff = fits.FITSDiff('diffbug.fits', 'diffbug.fits')
++    assert diff.identical, 'Files should be identical'

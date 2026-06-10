@@ -1,0 +1,115 @@
+{
+  "iteration": 5,
+  "failure_type": "NOT_VALID",
+  "score_breakdown": {
+    "score_schema_version": "gate-v4-0to1",
+    "score_range": "0..1",
+    "bug_fail_score": 0.0,
+    "bug_fail_features": {
+      "f_fail": 0.0,
+      "f_assert": 1.0,
+      "f_symptom": 0.6667
+    },
+    "issue_alignment_score": 1.0,
+    "coverage_score": 0.0,
+    "oracle_confidence_score": 1.0,
+    "oracle_risk_flags": [],
+    "conservative_gate_reasons": [],
+    "gate_warnings": [],
+    "target_verified": false,
+    "strong_issue_evidence": true,
+    "coverage_fallback_reason": "",
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic",
+    "repair_attempted": false,
+    "repair_actions": [],
+    "repair_failed_reason": "",
+    "repair_retry_count": 0,
+    "retry_required_oracle_risks": [],
+    "semantic_risk_flags": [],
+    "failure_type_detail": ""
+  },
+  "diagnosis": "테스트가 수집되지 않음 (import 오류). Test not collected (ImportError: cannot import name 'DocumenterBridge' from 'sphinx.ext.autodoc' (/testbed/sphinx/ext/autodoc/__init__.py)\u001b[0m). Fix the import in the generated test. Test not collected (ImportError: cannot import name 'DocumenterBridge' from 'sphinx.ext.autodoc' (/testbed/sphinx/ext/autodoc/__init__.py)\u001b[0m). Fix the import in the generated test.",
+  "feedback": {
+    "failure_type": "NOT_VALID",
+    "diagnosis": "테스트가 수집되지 않음 (import 오류). Test not collected (ImportError: cannot import name 'DocumenterBridge' from 'sphinx.ext.autodoc' (/testbed/sphinx/ext/autodoc/__init__.py)\u001b[0m). Fix the import in the generated test. Test not collected (ImportError: cannot import name 'DocumenterBridge' from 'sphinx.ext.autodoc' (/testbed/sphinx/ext/autodoc/__init__.py)\u001b[0m). Fix the import in the generated test.",
+    "oracle_additions": [],
+    "stimulus_additions": [],
+    "precondition_additions": [
+      "테스트 수집 중 import 오류 발생: Test not collected (ImportError: cannot import name 'DocumenterBridge' from 'sphinx.ext.autodoc' (/testbed/sphinx/ext/autodoc/__init__.py)\u001b[0m). Fix the import in the generated test.. imports 목록에서 해당 심볼을 제거하거나 올바른 모듈 경로로 수정하라. 다른 테스트 파일로 교체하지 말고 import를 수정하라."
+    ],
+    "expected_failure_override": "",
+    "switch_scenario": false,
+    "candidate_test_file_override": "tests/roots/test-domain-c-intersphinx/conf.py"
+  },
+  "refined_scenario": {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "doc/conf.py",
+      "target_function": "",
+      "related_classes": [],
+      "candidate_test_file": "tests/roots/test-domain-c-intersphinx/conf.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module.",
+      "Reproduce the input conditions described in the issue.",
+      "[iteration-4 feedback] 테스트 수집 중 import 오류 발생: Test not collected (ImportError: cannot import name 'DocumenterBridge' from 'sphinx.ext.autodoc' (/testbed/sphinx/ext/autodoc/__init__.py)\u001b[0m). Fix the import in the generated test.. imports 목록에서 해당 심볼을 제거하거나 올바른 모듈 경로로 수정하라. 다른 테스트 파일로 교체하지 말고 import를 수정하라.",
+      "[iteration-5 feedback] 테스트 수집 중 import 오류 발생: Test not collected (ImportError: cannot import name 'DocumenterBridge' from 'sphinx.ext.autodoc' (/testbed/sphinx/ext/autodoc/__init__.py)\u001b[0m). Fix the import in the generated test.. imports 목록에서 해당 심볼을 제거하거나 올바른 모듈 경로로 수정하라. 다른 테스트 파일로 교체하지 말고 import를 수정하라."
+    ],
+    "execution_stimulus": [
+      "Execute the reproduction code from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "Returns:",
+    "relevant_source_files": [
+      "doc/conf.py",
+      "doc/development/tutorials/examples/todo.py",
+      "sphinx/config.py"
+    ],
+    "relevant_test_files": [
+      "tests/roots/test-domain-c-intersphinx/conf.py",
+      "tests/roots/test-domain-cpp-intersphinx/conf.py",
+      "tests/roots/test-ext-intersphinx-cppdomain/conf.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unknown"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "autodoc_typehints = \"description\"\r\nautodoc_typehints_description_target = \"documented\"\r\n\r\nnapoleon_numpy_docstring = False"
+      },
+      {
+        "language": "python",
+        "code": "\"\"\"\r\nDescription.\r\n\r\nParameters:\r\n    param1: First parameter.\r\n    param2: Second parameter.\r\n\r\nReturns:\r\n    The returned value.\r\n\r\n\"\"\""
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [],
+      "classes": [],
+      "files": [],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  },
+  "should_continue": true,
+  "test_results": {},
+  "coverage_summary": {},
+  "failure_type_detail": ""
+}

@@ -1,0 +1,25 @@
+--- a/doc/en/example/assertion/test_failures.py
++++ b/doc/en/example/assertion/test_failures.py
+@@ -11,3 +11,22 @@
+     result = testdir.runpytest(target, syspathinsert=True)
+     result.stdout.fnmatch_lines(["*44 failed*"])
+     assert result.ret != 0
++
++import pytest
++from _pytest.runner import pytest_runtest_makereport
++
++def test_pytest_runtest_makereport_skipped_repro():
++    @pytest.fixture
++    def mock_item(request):
++        class MockItem:
++            def __init__(self):
++                self.location = ('mock_file.py', 1, 'mock_func')
++                self.session = request.node.session
++        return MockItem()
++
++    mock_item = mock_item(request)
++    report = pytest_runtest_makereport(mock_item, None, 'setup')
++    mock_item.session.config.hook.pytest_runtest_logreport(report=report)
++    assert report.skipped
++    # [Tier 2: probe-verified buggy repr — must differ after fix]
++    assert repr(report) != 'SKIPPED [1] src/_pytest/skipping.py:238: unconditional skip'

@@ -1,0 +1,76 @@
+[
+  {
+    "scenario_id": "S1",
+    "target_location": {
+      "source_file": "seaborn/_core/scales.py",
+      "target_function": "add",
+      "related_classes": [
+        "Dot",
+        "Penguins",
+        "Plot"
+      ],
+      "candidate_test_file": "tests/_core/test_plot.py",
+      "confidence": "medium"
+    },
+    "setup_steps": [
+      "Import the relevant module (framework: unittest).",
+      "Set up an environment where add can be called."
+    ],
+    "execution_stimulus": [
+      "Call add with the reproduction conditions from the issue.",
+      "Compare the result with the expected value."
+    ],
+    "expected_failure": "Wrong legend values of large ranges",
+    "relevant_source_files": [
+      "seaborn/_core/scales.py",
+      "seaborn/_core/plot.py",
+      "seaborn/utils.py"
+    ],
+    "relevant_test_files": [
+      "tests/_core/test_plot.py",
+      "tests/_core/test_scales.py",
+      "tests/_core/test_subplots.py"
+    ],
+    "test_environment": {
+      "required_fixtures": [],
+      "runner": "unittest"
+    },
+    "reproduction_code": [
+      {
+        "language": "python",
+        "code": "import seaborn as sns\r\nimport seaborn.objects as so\r\n\r\npenguins = sns.load_dataset(\"Penguins\")\r\npenguins[\"body_mass_mg\"] = penguins[\"body_mass_g\"]*1000\r\n(\r\n    so.Plot(\r\n        penguins, x=\"bill_length_mm\", y=\"bill_depth_mm\",\r\n        color=\"species\", pointsize=\"body_mass_mg\",\r\n    )\r\n    .add(so.Dot())\r\n)"
+      }
+    ],
+    "expected_outputs": [],
+    "actual_outputs": [],
+    "error_keywords": [],
+    "identifiers": {
+      "functions": [
+        "add",
+        "load_dataset"
+      ],
+      "classes": [
+        "Dot",
+        "Penguins",
+        "Plot",
+        "ScalarFormatter"
+      ],
+      "files": [
+        "seaborn/_core/scales.py"
+      ],
+      "exceptions": []
+    },
+    "oracle_hints": [
+      "Call the target API and assert public state/value behavior, not local constants.",
+      "For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality."
+    ],
+    "oracle": "Call the target API and assert public state/value behavior, not local constants. For matplotlib axis inversion, prefer ax.yaxis_inverted()/xaxis_inverted() or semantic bin/tick invariants over raw limit equality.",
+    "oracle_contract": {
+      "oracle_type": "semantic_invariant",
+      "oracle_source": "inferred_semantic",
+      "rule": "Use a small semantic invariant; avoid raw rendered text, guessed legend labels, and brittle exact strings."
+    },
+    "oracle_type": "semantic_invariant",
+    "oracle_source": "inferred_semantic"
+  }
+]

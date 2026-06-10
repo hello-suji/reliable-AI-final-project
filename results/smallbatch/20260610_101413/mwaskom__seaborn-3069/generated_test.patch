@@ -1,0 +1,23 @@
+--- a/tests/_core/test_plot.py
++++ b/tests/_core/test_plot.py
+@@ -2010,3 +2010,20 @@
+     def test_default_repr(self):
+ 
+         assert repr(Default()) == "<default>"
++
++import pandas as pd
++def test_nominal_scale_behavior_repro():
++    # Setup plot with Nominal scale
++    data = pd.DataFrame({'category': ['A', 'B', 'C'], 'value': [1, 2, 3]})
++    plot = Plot(data).add(Mark(), x='category', y='value')
++    plotter = plot._get_plotter()
++    plotter.map_scales()
++    plotter.assign_data()
++    plotter.create_axes()
++    plotter.draw()
++    plotter.finalize()
++
++    # Assert nominal scale behavior
++    ax = plotter.ax
++    tick_labels = [label.get_text() for label in ax.get_xticklabels()]
++    assert set(tick_labels) == {'A', 'B', 'C'}

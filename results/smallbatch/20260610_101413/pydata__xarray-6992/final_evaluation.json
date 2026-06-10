@@ -1,0 +1,14 @@
+{
+  "instance_id": "pydata__xarray-6992",
+  "final_score": 0.7115384615384616,
+  "before_patch": {
+    "xarray/tests/test_dataset.py::test_len_after_set_and_reset_index_repro": "FAILED"
+  },
+  "after_patch": {
+    "xarray/tests/test_dataset.py::test_len_after_set_and_reset_index_repro": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "baae8e16d0594de2e1638da242845ecc9ded04fc1c38680ab18defc196ef6df1",
+  "resolved": true
+}

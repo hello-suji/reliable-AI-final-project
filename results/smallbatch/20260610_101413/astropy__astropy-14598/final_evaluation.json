@@ -1,0 +1,14 @@
+{
+  "instance_id": "astropy__astropy-14598",
+  "final_score": 1.0,
+  "before_patch": {
+    "astropy/io/fits/tests/test_diff.py::test_card_fromstring_null_string_handling_repro": "FAILED"
+  },
+  "after_patch": {
+    "astropy/io/fits/tests/test_diff.py::test_card_fromstring_null_string_handling_repro": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "dec43fc36206deb3ec47fc5bc4a06ba69e45b17571a32bd9d8a0f458bc89913e",
+  "resolved": true
+}

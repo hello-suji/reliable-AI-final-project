@@ -1,0 +1,14 @@
+{
+  "instance_id": "psf__requests-2931",
+  "final_score": 0.75,
+  "before_patch": {
+    "test_requests.py::test_put_with_binary_payload_repro": "FAILED"
+  },
+  "after_patch": {
+    "test_requests.py::test_put_with_binary_payload_repro": "PASSED"
+  },
+  "harness_returncode": 0,
+  "error": null,
+  "patch_sha256": "10dce18b01b1bca4c377f412d290b2cf00591336b7985b258bd8bde1859da23a",
+  "resolved": true
+}
